@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>John Salisbury Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --text: #1a1a18;
+      --text-muted: #6b6b67;
+      --text-faint: #9b9b96;
+      --border: rgba(0,0,0,0.12);
+      --border-strong: rgba(0,0,0,0.22);
+      --bg: #faf9f7;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* NAV */
+    nav {
+      padding: 2rem 0 1.5rem;
+      border-bottom: 0.5px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 15px;
+      letter-spacing: 0.03em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-link {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 0 4rem;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(34px, 5vw, 48px);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      max-width: 520px;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--text-muted);
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      max-width: 400px;
+    }
+
+    /* DIVIDER */
+    .divider {
+      width: 28px;
+      height: 0.5px;
+      background: var(--border-strong);
+      margin: 3.5rem 0;
+    }
+
+    /* SECTIONS */
+    .section { margin-bottom: 4rem; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 1.25rem;
+    }
+
+    .section-text {
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--text-muted);
+      max-width: 540px;
+    }
+
+    /* SERVICES GRID */
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .service-item {
+      padding: 1.25rem 1.5rem;
+      border-right: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .service-item:nth-child(2n) { border-right: none; }
+    .service-item:nth-last-child(-n+2) { border-bottom: none; }
+
+    .service-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .service-desc {
+      font-size: 12px;
+      color: var(--text-faint);
+      line-height: 1.5;
+    }
+
+    /* CONTACT */
+    .contact-text {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .email-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--border-strong);
+      padding-bottom: 3px;
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s;
+    }
+
+    .email-link:hover { opacity: 0.6; }
+
+    .email-link svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: 5rem;
+      padding: 1.5rem 0 2.5rem;
+      border-top: 0.5px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .footer-copy, .footer-domain {
+      font-size: 11px;
+      color: var(--text-faint);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-domain { text-transform: uppercase; }
+
+    /* RESPONSIVE */
+    @media (max-width: 520px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .service-item { border-right: none; }
+      .service-item:nth-last-child(-n+2) { border-bottom: 0.5px solid var(--border); }
+      .service-item:last-child { border-bottom: none; }
+      nav { flex-direction: column; gap: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <nav>
+      <a href="/" class="logo">John Salisbury Design</a>
+      <a href="#contact" class="nav-link">Get in touch</a>
+    </nav>
+
+    <section class="hero">
+      <p class="eyebrow">Freelance Designer — San Diego, CA</p>
+      <h1>Design that thinks <em>and</em> feels right.</h1>
+      <p class="hero-sub">Brand, visual identity, UX, and web design for businesses that care about the details.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="section" id="about">
+      <p class="section-label">About</p>
+      <p class="section-text">
+        I'm John Salisbury, a freelance designer with a focus on brand identity, UI/UX, and web. I work with founders, studios, and small teams to create visual systems that are clear, considered, and built to last — from first mark to final pixel.
+      </p>
+    </section>
+
+    <section class="section" id="services">
+      <p class="section-label">What I do</p>
+      <div class="services-grid">
+        <div class="service-item">
+          <p class="service-name">Brand &amp; Identity</p>
+          <p class="service-desc">Logos, visual systems, guidelines</p>
+        </div>
+        <div class="service-item">
+          <p class="service-name">Web &amp; UI Design</p>
+          <p class="service-desc">Websites, interfaces, prototypes</p>
+        </div>
+        <div class="service-item">
+          <p class="service-name">UX Design</p>
+          <p class="service-desc">User research, flows, wireframes</p>
+        </div>
+        <div class="service-item">
+          <p class="service-name">Print &amp; Collateral</p>
+          <p class="service-desc">Decks, packaging, stationery</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <p class="section-label">Contact</p>
+      <p class="contact-text">Available for freelance projects. Let's talk about yours.</p>
+      <a href="mailto:john.salisbury@adaptivstudios.com" class="email-link">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+        john.salisbury@adaptivstudios.com
+      </a>
+    </section>
+
+    <footer>
+      <span class="footer-copy">© 2026 John Salisbury Design</span>
+      <span class="footer-domain">johnsalisburydesign.com</span>
+    </footer>
+
+  </div>
+
+</body>
+</html>
