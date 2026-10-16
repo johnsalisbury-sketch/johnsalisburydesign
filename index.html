@@ -386,9 +386,41 @@
     raf = requestAnimationFrame(renderLoop);
   }
 
-  // Vertical line blend — like an Illustrator stroke blend
-  // Black lines on black bg: the negative space (gaps) is what reads.
-  // Lines breathe: gap opens and closes slowly across the panel.
+  // Vertical line grid with slow color washes.
+  // Three color "pools" drift across the canvas independently —
+  // deep rust, dark crimson, muted navy — each a gaussian-shaped
+  // band of color that tints the lines it passes over.
+  // Base lines are still near-white; color is additive and very subtle.
+
+  const COLOR_POOLS = [
+    { r: 160, g: 40,  b: 20  }, // rust / burnt orange
+    { r: 100, g: 15,  b: 30  }, // dark crimson
+    { r: 20,  g: 30,  b: 90  }, // muted navy
+  ];
+
+  function poolColor(i, normX, t) {
+    // Each pool has its own slow drift and width
+    const speeds   = [0.07, 0.05, 0.06];
+    const offsets  = [0.25, 0.65, 0.45];
+    const widths   = [0.30, 0.25, 0.35];
+    const bobs     = [0.11, 0.09, 0.13]; // side-to-side amplitude
+
+    let r = 0, g = 0, b = 0;
+
+    COLOR_POOLS.forEach((col, pi) => {
+      const center = offsets[pi]
+                   + Math.sin(t * speeds[pi] + pi * 2.1) * bobs[pi]
+                   + Math.cos(t * speeds[pi] * 0.4 + pi) * bobs[pi] * 0.5;
+      const dist = Math.abs(normX - center) / widths[pi];
+      const strength = Math.exp(-dist * dist * 3.5) * 0.55; // gaussian falloff
+      r += col.r * strength;
+      g += col.g * strength;
+      b += col.b * strength;
+    });
+
+    return { r: Math.min(255, r), g: Math.min(255, g), b: Math.min(255, b) };
+  }
+
   function drawGrid(c, t) {
     const numLines = 260;
     const step = W / numLines;
@@ -396,13 +428,23 @@
     c.save();
     for (let i = 0; i < numLines; i++) {
       const x = i * step + step / 2;
-      const wave = Math.sin(t * 0.5 - i * 0.08) * 0.55
-                 + Math.sin(t * 0.18 + i * 0.03) * 0.35
-                 + Math.sin(t * 0.09) * 0.1;
-      // swings from near-invisible gap to near-solid
+      const normX = i / numLines;
+
+      // Travelling wave for line width — more variation than before
+      const wave = Math.sin(t * 0.5  - i * 0.08) * 0.50
+                 + Math.sin(t * 0.18 + i * 0.03) * 0.30
+                 + Math.sin(t * 0.09 - i * 0.02) * 0.12
+                 + Math.sin(t * 0.31 + i * 0.11) * 0.08;
       const lw = step * (0.45 + wave * 0.55);
 
-      c.strokeStyle = 'rgba(255,255,255,0.22)';
+      // Base white + color tint from drifting pools
+      const col = poolColor(i, normX, t);
+      // Mix: white base tinted by color pools
+      const rr = Math.round(Math.min(255, 200 + col.r * 0.5));
+      const gg = Math.round(Math.min(255, 200 + col.g * 0.5));
+      const bb = Math.round(Math.min(255, 200 + col.b * 0.5));
+
+      c.strokeStyle = `rgba(${rr},${gg},${bb},0.22)`;
       c.lineWidth = Math.max(0.3, lw);
       c.beginPath();
       c.moveTo(x, 0);
