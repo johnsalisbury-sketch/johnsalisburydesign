@@ -3,288 +3,498 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>John Salisbury Design</title>
+  <title>John Salisbury</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --text: #1a1a18;
-      --text-muted: #6b6b67;
-      --text-faint: #9b9b96;
-      --border: rgba(0,0,0,0.12);
-      --border-strong: rgba(0,0,0,0.22);
-      --bg: #faf9f7;
+      --bg: #000;
+      --fg: #fff;
+      --dim: rgba(255,255,255,0.3);
+      --faint: rgba(255,255,255,0.09);
+      --mono: 'IBM Plex Mono', 'Courier New', monospace;
+      --display: 'Bebas Neue', 'Arial Narrow', sans-serif;
+      color-scheme: dark;
     }
 
-    html { font-size: 16px; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
+    html, body {
       background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+      color: var(--fg);
+      font-family: var(--mono);
+      font-weight: 300;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    .container {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-
-    /* NAV */
-    nav {
-      padding: 2rem 0 1.5rem;
-      border-bottom: 0.5px solid var(--border);
+    /* ── HEADER ── */
+    header {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
+      align-items: center;
+      padding: 1.6rem max(24px, env(safe-area-inset-right, 24px))
+               1.6rem max(24px, env(safe-area-inset-left, 24px));
+      border-bottom: 1px solid var(--faint);
     }
 
     .logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 15px;
-      letter-spacing: 0.03em;
-      color: var(--text);
-      text-decoration: none;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--dim);
     }
 
-    .nav-link {
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
+    nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      font-size: 10px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--dim);
       text-decoration: none;
       transition: color 0.2s;
     }
+    nav a:hover { color: var(--fg); }
 
-    .nav-link:hover { color: var(--text); }
-
-    /* HERO */
+    /* ── HERO PANEL ── */
     .hero {
-      padding: 5rem 0 4rem;
-    }
-
-    .eyebrow {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-faint);
-      margin-bottom: 1.5rem;
-    }
-
-    h1 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(34px, 5vw, 48px);
-      font-weight: 400;
-      line-height: 1.1;
-      color: var(--text);
-      margin-bottom: 1.5rem;
-      max-width: 520px;
-    }
-
-    h1 em {
-      font-style: italic;
-      color: var(--text-muted);
-    }
-
-    .hero-sub {
-      font-size: 16px;
-      line-height: 1.8;
-      color: var(--text-muted);
-      max-width: 400px;
-    }
-
-    /* DIVIDER */
-    .divider {
-      width: 28px;
-      height: 0.5px;
-      background: var(--border-strong);
-      margin: 3.5rem 0;
-    }
-
-    /* SECTIONS */
-    .section { margin-bottom: 4rem; }
-
-    .section-label {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-faint);
-      margin-bottom: 1.25rem;
-    }
-
-    .section-text {
-      font-size: 15px;
-      line-height: 1.85;
-      color: var(--text-muted);
-      max-width: 540px;
-    }
-
-    /* SERVICES GRID */
-    .services-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      border: 0.5px solid var(--border);
-      border-radius: 8px;
+      position: relative;
+      width: 100%;
+      /* Fixed aspect ratio — the canvas lives here */
+      aspect-ratio: 16 / 7;
+      background: #000;
+      border-bottom: 1px solid var(--faint);
       overflow: hidden;
     }
 
-    .service-item {
-      padding: 1.25rem 1.5rem;
-      border-right: 0.5px solid var(--border);
-      border-bottom: 0.5px solid var(--border);
+    #heroCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
     }
 
-    .service-item:nth-child(2n) { border-right: none; }
-    .service-item:nth-last-child(-n+2) { border-bottom: none; }
-
-    .service-name {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-
-    .service-desc {
-      font-size: 12px;
-      color: var(--text-faint);
-      line-height: 1.5;
-    }
-
-    /* CONTACT */
-    .contact-text {
-      font-size: 15px;
-      line-height: 1.8;
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-    }
-
-    .email-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--text);
-      text-decoration: none;
-      border-bottom: 0.5px solid var(--border-strong);
-      padding-bottom: 3px;
-      letter-spacing: 0.02em;
-      transition: opacity 0.2s;
-    }
-
-    .email-link:hover { opacity: 0.6; }
-
-    .email-link svg {
-      width: 16px;
-      height: 16px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      flex-shrink: 0;
-    }
-
-    /* FOOTER */
-    footer {
-      margin-top: 5rem;
-      padding: 1.5rem 0 2.5rem;
-      border-top: 0.5px solid var(--border);
+    /* ── FOOTER STRIP ── */
+    .footer-strip {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: stretch;
+      border-bottom: 1px solid var(--faint);
+    }
+
+    .footer-strip-item {
+      flex: 1;
+      padding: 2rem max(24px, env(safe-area-inset-right, 24px))
+               2rem max(24px, env(safe-area-inset-left, 24px));
+      border-right: 1px solid var(--faint);
+    }
+    .footer-strip-item:last-child { border-right: none; }
+
+    .strip-label {
+      font-size: 8px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--faint);
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+
+    .strip-value {
+      font-family: var(--display);
+      font-size: clamp(18px, 2.2vw, 30px);
+      letter-spacing: 0.06em;
+      color: var(--fg);
+      line-height: 1;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      padding: 1.4rem max(24px, env(safe-area-inset-right, 24px))
+               1.4rem max(24px, env(safe-area-inset-left, 24px));
       flex-wrap: wrap;
       gap: 0.5rem;
     }
 
-    .footer-copy, .footer-domain {
-      font-size: 11px;
-      color: var(--text-faint);
-      letter-spacing: 0.05em;
+    footer span {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.16);
     }
 
-    .footer-domain { text-transform: uppercase; }
+    @media (max-width: 600px) {
+      .footer-strip { flex-direction: column; }
+      .footer-strip-item { border-right: none; border-bottom: 1px solid var(--faint); }
+      .footer-strip-item:last-child { border-bottom: none; }
+      .bottom { grid-template-columns: 1fr; }
+      .bottom-cell { border-right: none; border-bottom: 1px solid var(--faint); }
+      .bottom-cell:last-child { border-bottom: none; }
+      .hero { aspect-ratio: 4 / 3; }
+    }
 
-    /* RESPONSIVE */
-    @media (max-width: 520px) {
-      .services-grid { grid-template-columns: 1fr; }
-      .service-item { border-right: none; }
-      .service-item:nth-last-child(-n+2) { border-bottom: 0.5px solid var(--border); }
-      .service-item:last-child { border-bottom: none; }
-      nav { flex-direction: column; gap: 0.75rem; }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-
+  <header>
+    <span class="logo">John Salisbury</span>
     <nav>
-      <a href="/" class="logo">John Salisbury Design</a>
-      <a href="#contact" class="nav-link">Get in touch</a>
+      <a href="#practice">Practice</a>
+      <a href="#about">About</a>
+      <a href="mailto:john.salisbury@adaptivstudios.com">Contact</a>
     </nav>
+  </header>
 
-    <section class="hero">
-      <p class="eyebrow">Freelance Designer — San Diego, CA</p>
-      <h1>Design that thinks <em>and</em> feels right.</h1>
-      <p class="hero-sub">Brand, visual identity, UX, and web design for businesses that care about the details.</p>
-    </section>
-
-    <div class="divider"></div>
-
-    <section class="section" id="about">
-      <p class="section-label">About</p>
-      <p class="section-text">
-        I'm John Salisbury, a freelance designer with a focus on brand identity, UI/UX, and web. I work with founders, studios, and small teams to create visual systems that are clear, considered, and built to last — from first mark to final pixel.
-      </p>
-    </section>
-
-    <section class="section" id="services">
-      <p class="section-label">What I do</p>
-      <div class="services-grid">
-        <div class="service-item">
-          <p class="service-name">Brand &amp; Identity</p>
-          <p class="service-desc">Logos, visual systems, guidelines</p>
-        </div>
-        <div class="service-item">
-          <p class="service-name">Web &amp; UI Design</p>
-          <p class="service-desc">Websites, interfaces, prototypes</p>
-        </div>
-        <div class="service-item">
-          <p class="service-name">UX Design</p>
-          <p class="service-desc">User research, flows, wireframes</p>
-        </div>
-        <div class="service-item">
-          <p class="service-name">Print &amp; Collateral</p>
-          <p class="service-desc">Decks, packaging, stationery</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="contact">
-      <p class="section-label">Contact</p>
-      <p class="contact-text">Available for freelance projects. Let's talk about yours.</p>
-      <a href="mailto:john.salisbury@adaptivstudios.com" class="email-link">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-        john.salisbury@adaptivstudios.com
-      </a>
-    </section>
-
-    <footer>
-      <span class="footer-copy">© 2026 John Salisbury Design</span>
-      <span class="footer-domain">johnsalisburydesign.com</span>
-    </footer>
-
+  <!-- ── HERO: animated canvas ── -->
+  <div class="hero">
+    <canvas id="heroCanvas" aria-label="John Salisbury Design"></canvas>
   </div>
+
+  <!-- ── PRACTICE STRIP ── -->
+  <div class="footer-strip" id="practice">
+    <div class="footer-strip-item">
+      <span class="strip-label">01</span>
+      <div class="strip-value">UX &amp; Product</div>
+    </div>
+    <div class="footer-strip-item">
+      <span class="strip-label">02</span>
+      <div class="strip-value">Brand &amp; Conceptual</div>
+    </div>
+    <div class="footer-strip-item">
+      <span class="strip-label">03</span>
+      <div class="strip-value">Motion &amp; Experiments</div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 John Salisbury</span>
+    <span>johnsalisburydesign.com</span>
+  </footer>
+
+<script>
+;(function () {
+  const canvas = document.getElementById('heroCanvas');
+  const ctx = canvas.getContext('2d');
+
+  const FACE = "'Bebas Neue', 'Arial Narrow', sans-serif";
+
+  // Layout: two lines + "DESIGN" label
+  // Letters are spaced out — readable but typographically loose,
+  // like a title set with intentional tracked gaps.
+  // Each letter has a fixed proportional position.
+
+  let W, H, dpr;
+  let letters = [];
+  let raf;
+
+  // --- ANIMATION STATE ---
+  // We use a "posterize time" / frame-echo approach:
+  // - A hidden offscreen buffer receives smooth animation
+  // - We composite the buffer onto the canvas at a STEPPED rate (e.g. 12fps)
+  //   using additive blending — older frames linger at low opacity
+  // - This creates the AE "echo" / trace / posterize-time look
+  const TRAIL_FRAMES = 6;     // how many echo frames to keep
+  const STEP_FPS = 10;        // stepped frame rate (posterize time)
+  let trail = [];             // circular buffer of ImageData snapshots
+  let lastStep = 0;
+  let globalT = 0;
+
+  // Each letter: char, proportional x/y from center, relative size, phase offset
+  // Laid out so JOHN is one row, SALISBURY below — but with generous tracking
+  // and slight vertical offset variation for typographic interest.
+  // DESIGN sits smaller, bottom right as a descriptor.
+
+  // JOHN spans lx -0.37 → ~0.38 (J left-edge to N right-edge ≈ 0.75W)
+  // SALISBURY S left-edge aligns with JOHN J left-edge: lx = -0.37
+  // DESIGN: left-aligns with S of SALISBURY (-0.40), sized to match JOHN width
+  //   JOHN width ≈ 0.75W at ls=1.0; DESIGN has 6 chars vs 4 for JOHN,
+  //   so ls = (4/6)*1.00 ≈ 0.66 makes the word-widths roughly equal.
+  // Flipped letters: N in JOHN (flip:true), first S in SALISBURY (flip:true)
+
+  const LAYOUT = [
+    // JOHN — large, top row, tracked wide; J left-edge at ~lx -0.37
+    { c:'J', lx:-0.37, ly:-0.14, ls:1.00, ph:0.0, flip:false },
+    { c:'O', lx:-0.19, ly:-0.14, ls:1.00, ph:0.3, flip:false },
+    { c:'H', lx: 0.01, ly:-0.14, ls:1.00, ph:0.6, flip:false },
+    { c:'N', lx: 0.21, ly:-0.14, ls:1.00, ph:0.9, flip:true  }, // ← upside-down
+    // SALISBURY — second row; S left-edge aligns with J of JOHN
+    { c:'S', lx:-0.40, ly: 0.15, ls:0.78, ph:1.2, flip:true  }, // ← upside-down
+    { c:'A', lx:-0.28, ly: 0.15, ls:0.78, ph:1.5, flip:false },
+    { c:'L', lx:-0.17, ly: 0.15, ls:0.78, ph:1.8, flip:false },
+    { c:'I', lx:-0.09, ly: 0.15, ls:0.78, ph:2.1, flip:false },
+    { c:'S', lx:-0.03, ly: 0.15, ls:0.78, ph:2.4, flip:false },
+    { c:'B', lx: 0.07, ly: 0.15, ls:0.78, ph:2.7, flip:false },
+    { c:'U', lx: 0.18, ly: 0.15, ls:0.78, ph:3.0, flip:false },
+    { c:'R', lx: 0.28, ly: 0.15, ls:0.78, ph:3.3, flip:false },
+    { c:'Y', lx: 0.38, ly: 0.15, ls:0.78, ph:3.6, flip:false },
+    // DESIGN — left-aligns with S of SALISBURY, sized to match JOHN total width
+    { c:'D', lx:-0.40, ly: 0.38, ls:0.66, ph:4.0, flip:false },
+    { c:'E', lx:-0.28, ly: 0.38, ls:0.66, ph:4.1, flip:false },
+    { c:'S', lx:-0.16, ly: 0.38, ls:0.66, ph:4.2, flip:false },
+    { c:'I', lx:-0.05, ly: 0.38, ls:0.66, ph:4.3, flip:false },
+    { c:'G', lx: 0.02, ly: 0.38, ls:0.66, ph:4.4, flip:false },
+    { c:'N', lx: 0.17, ly: 0.38, ls:0.66, ph:4.5, flip:false },
+  ];
+
+  function buildLetters() {
+    letters = [];
+    const baseSize = H * 0.30; // base font size for ls=1.0
+
+    LAYOUT.forEach(def => {
+      const size = Math.round(baseSize * def.ls);
+      ctx.font = `${size}px ${FACE}`;
+      const m = ctx.measureText(def.c);
+      const charW = m.width;
+      // ascent approximation for flip pivot
+      const ascent = size * 0.78;
+      letters.push({
+        c: def.c,
+        bx: W / 2 + def.lx * W - charW / 2,
+        by: H / 2 + def.ly * H,
+        size,
+        ph: def.ph,
+        flip: def.flip || false,
+        charW, ascent,
+        ox: 0, oy: 0,
+      });
+    });
+  }
+
+  function setup() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.offsetWidth;
+    H = canvas.offsetHeight;
+    canvas.width  = W * dpr;
+    canvas.height = H * dpr;
+    ctx.scale(dpr, dpr);
+    trail = [];
+    buildLetters();
+  }
+
+  // Draw one "true" frame into the context
+  function drawFrame(t) {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, W, H);
+
+    letters.forEach(l => {
+      // Each letter fades in with a staggered phase, then gently breathes
+      const arrive = Math.min(1, Math.max(0, (t - l.ph * 0.6) / 1.4));
+      const breathe = Math.sin(t * 0.6 + l.ph) * 0.012;
+
+      // Slight vertical float per letter, staggered
+      const floatY = 0;
+
+      const alpha = arrive;
+
+      if (alpha < 0.01) return;
+
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.font = `${l.size}px ${FACE}`;
+      ctx.fillStyle = '#ffffff';
+      ctx.textBaseline = 'alphabetic';
+      ctx.textAlign = 'left';
+      ctx.fillText(l.c, l.bx, l.by + floatY);
+      ctx.restore();
+    });
+  }
+
+  // Stepped + trail composite (posterize-time echo look)
+  function renderLoop(timestamp) {
+    globalT += 0.016; // ~60fps increment
+
+    const stepInterval = 1000 / STEP_FPS;
+
+    if (timestamp - lastStep >= stepInterval) {
+      lastStep = timestamp;
+
+      // Draw the "true" current frame into an offscreen canvas
+      const offscreen = document.createElement('canvas');
+      offscreen.width = W * dpr;
+      offscreen.height = H * dpr;
+      const octx = offscreen.getContext('2d');
+      octx.scale(dpr, dpr);
+
+      // Temporarily swap context, draw, swap back
+      const origFont = ctx.font;
+      drawFrameToCtx(octx, globalT);
+
+      // Grab pixel snapshot
+      const snap = octx.getImageData(0, 0, W * dpr, H * dpr);
+      trail.push(snap);
+      if (trail.length > TRAIL_FRAMES) trail.shift();
+
+      // Composite: black fill first, then each trail frame at decreasing alpha
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, W, H);
+
+      trail.forEach((frame, i) => {
+        const age = trail.length - 1 - i; // 0 = newest
+        // Older frames are fainter and slightly offset (echo / trace)
+        const alpha = age === 0 ? 1.0 : Math.pow(0.45, age) * 0.7;
+        const offX = age * 1.5; // slight rightward trace of older frames
+        const offY = age * 0.4;
+
+        // Draw the snapshot
+        const tmp = document.createElement('canvas');
+        tmp.width = W * dpr;
+        tmp.height = H * dpr;
+        const tctx = tmp.getContext('2d');
+        tctx.putImageData(frame, 0, 0);
+
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        // Translate offset in device pixels
+        ctx.drawImage(tmp, -offX * dpr, -offY * dpr, W + offX * 2, H + offY * 2);
+        ctx.restore();
+      });
+    }
+
+    raf = requestAnimationFrame(renderLoop);
+  }
+
+  // Vertical line blend — like an Illustrator stroke blend
+  // Black lines on black bg: the negative space (gaps) is what reads.
+  // Lines breathe: gap opens and closes slowly across the panel.
+  function drawGrid(c, t) {
+    const numLines = 260;
+    const step = W / numLines;
+
+    c.save();
+    for (let i = 0; i < numLines; i++) {
+      const x = i * step + step / 2;
+      const wave = Math.sin(t * 0.5 - i * 0.08) * 0.55
+                 + Math.sin(t * 0.18 + i * 0.03) * 0.35
+                 + Math.sin(t * 0.09) * 0.1;
+      // swings from near-invisible gap to near-solid
+      const lw = step * (0.45 + wave * 0.55);
+
+      c.strokeStyle = 'rgba(255,255,255,0.22)';
+      c.lineWidth = Math.max(0.3, lw);
+      c.beginPath();
+      c.moveTo(x, 0);
+      c.lineTo(x, H);
+      c.stroke();
+    }
+    c.restore();
+  }
+
+  function drawFrameToCtx(c, t) {
+    c.clearRect(0, 0, W, H);
+    c.fillStyle = '#000';
+    c.fillRect(0, 0, W, H);
+
+    drawGrid(c, t);
+
+    letters.forEach((l, i) => {
+      const arrive = Math.min(1, Math.max(0, (t - l.ph * 0.6) / 1.4));
+      const floatY = 0;
+      if (arrive < 0.01) return;
+
+      const kernWave = Math.sin(t * 0.35 - i * 0.22) * 0.55
+                     + Math.sin(t * 0.13 + i * 0.41) * 0.30;
+      const kernNudge = kernWave * l.charW * 0.14;
+
+      const rx = l.bx + kernNudge;
+      const ry = l.by + floatY;
+
+      // Sparse bloom: two sines multiplied → spikes above threshold independently per letter
+      const blurSine = Math.sin(t * 0.6 + i * 1.37)
+                     * Math.sin(t * 0.25 + i * 0.83);
+      // threshold 0.45 → fires ~20% of the time per letter, rarely in unison
+      const blurStrength = Math.max(0, blurSine - 0.45) / 0.55;
+
+      if (blurStrength > 0.01) {
+        // Bloom: draw soft expanding copies of the letter — like light overexposing.
+        // Outer layers: blurred + scaled up, high opacity white — so the letter
+        // looks like it's radiating outward. Core letter dims so energy "moves out".
+        const cx = rx + l.charW / 2;
+        const cy = ry - l.ascent * 0.5;
+        const layers = 8;
+
+        for (let k = 1; k <= layers; k++) {
+          const frac = k / layers;
+          // Scale: outer copies expand up to 18% beyond the letter
+          const scale = 1 + frac * blurStrength * 0.18;
+          // Blur radius grows outward — inner copies sharp, outer soft
+          const blurPx = frac * blurStrength * l.size * 0.08;
+          // Alpha: strong at inner layers, fades toward the outer edge
+          // This creates a glowing "halo" that's actually visible
+          const ghostAlpha = arrive * blurStrength * (0.55 - frac * 0.48);
+
+          if (ghostAlpha < 0.02) continue;
+
+          c.save();
+          c.globalAlpha = ghostAlpha;
+          if (blurPx > 0.5) c.filter = `blur(${blurPx.toFixed(1)}px)`;
+          c.font = `${l.size}px ${FACE}`;
+          c.fillStyle = '#ffffff';
+          c.textBaseline = 'alphabetic';
+          c.textAlign = 'left';
+          c.translate(cx, cy);
+          c.scale(scale, scale);
+          c.translate(-cx, -cy);
+          if (l.flip) {
+            const pivotX = rx + l.charW / 2;
+            const pivotY = ry - l.ascent / 2;
+            c.translate(pivotX, pivotY);
+            c.rotate(Math.PI);
+            c.translate(-pivotX, -pivotY);
+          }
+          c.fillText(l.c, rx, ry);
+          c.restore();
+        }
+      }
+
+      // Core letter: dims slightly during bloom so the brightness "spreads out"
+      const coreAlpha = arrive * (1 - blurStrength * 0.35);
+      c.save();
+      c.globalAlpha = Math.max(0, coreAlpha);
+      c.font = `${l.size}px ${FACE}`;
+      c.fillStyle = '#ffffff';
+      c.textBaseline = 'alphabetic';
+      c.textAlign = 'left';
+      if (l.flip) {
+        const pivotX = rx + l.charW / 2;
+        const pivotY = ry - l.ascent / 2;
+        c.translate(pivotX, pivotY);
+        c.rotate(Math.PI);
+        c.translate(-pivotX, -pivotY);
+      }
+      c.fillText(l.c, rx, ry);
+      c.restore();
+    });
+  }
+
+  function init() {
+    setup();
+    raf = requestAnimationFrame(renderLoop);
+  }
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(init);
+  } else {
+    setTimeout(init, 400);
+  }
+
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(raf);
+    setup();
+    raf = requestAnimationFrame(renderLoop);
+  });
+})();
+</script>
 
 </body>
 </html>
