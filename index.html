@@ -82,31 +82,29 @@
     /* ── FOOTER STRIP ── */
     .footer-strip {
       display: flex;
-      justify-content: space-between;
-      align-items: stretch;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 3rem;
+      padding: 0.9rem max(24px, env(safe-area-inset-left, 24px));
       border-bottom: 1px solid var(--faint);
     }
 
     .footer-strip-item {
-      flex: 1;
-      padding: 2rem max(24px, env(safe-area-inset-right, 24px))
-               2rem max(24px, env(safe-area-inset-left, 24px));
-      border-right: 1px solid var(--faint);
+      flex: none;
     }
-    .footer-strip-item:last-child { border-right: none; }
 
     .strip-label {
-      font-size: 8px;
+      font-size: 7px;
       letter-spacing: 0.26em;
       text-transform: uppercase;
       color: var(--faint);
       display: block;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.3rem;
     }
 
     .strip-value {
       font-family: var(--display);
-      font-size: clamp(18px, 2.2vw, 30px);
+      font-size: clamp(9px, 1.1vw, 15px);
       letter-spacing: 0.06em;
       color: var(--fg);
       line-height: 1;
@@ -213,59 +211,83 @@
   // and slight vertical offset variation for typographic interest.
   // DESIGN sits smaller, bottom right as a descriptor.
 
-  // JOHN spans lx -0.37 → ~0.38 (J left-edge to N right-edge ≈ 0.75W)
-  // SALISBURY S left-edge aligns with JOHN J left-edge: lx = -0.37
-  // DESIGN: left-aligns with S of SALISBURY (-0.40), sized to match JOHN width
-  //   JOHN width ≈ 0.75W at ls=1.0; DESIGN has 6 chars vs 4 for JOHN,
-  //   so ls = (4/6)*1.00 ≈ 0.66 makes the word-widths roughly equal.
-  // Flipped letters: N in JOHN (flip:true), first S in SALISBURY (flip:true)
+  // Layout: left-aligned block, anchored to a left margin.
+  // lx = offset from left margin (as fraction of W), ly = offset from vertical center.
+  // ls = relative size. Letters tracked wide so they spread rightward.
+  // Base size reduced to ~22% of H (was 30%) so the block is more compact.
+  // Left margin: 0.05W
+
+  // All three rows same font size (ls:1.00 everywhere).
+  // lx values are base positions — the kerning animation will spread/contract
+  // letters horizontally from these anchors at runtime.
+  // Tighter base tracking than before (~50% of previous gap).
+
+  // All rows same size. ly values are baseline positions from canvas center.
+  // Row spacing = 0.22H so three rows sit evenly centered in the panel.
+  // The flipped S in SALISBURY rotates around its own baseline/center,
+  // so its ly must match the rest of the row exactly.
 
   const LAYOUT = [
-    // JOHN — large, top row, tracked wide; J left-edge at ~lx -0.37
-    { c:'J', lx:-0.37, ly:-0.14, ls:1.00, ph:0.0, flip:false },
-    { c:'O', lx:-0.19, ly:-0.14, ls:1.00, ph:0.3, flip:false },
-    { c:'H', lx: 0.01, ly:-0.14, ls:1.00, ph:0.6, flip:false },
-    { c:'N', lx: 0.21, ly:-0.14, ls:1.00, ph:0.9, flip:true  }, // ← upside-down
-    // SALISBURY — second row; S left-edge aligns with J of JOHN
-    { c:'S', lx:-0.40, ly: 0.15, ls:0.78, ph:1.2, flip:true  }, // ← upside-down
-    { c:'A', lx:-0.28, ly: 0.15, ls:0.78, ph:1.5, flip:false },
-    { c:'L', lx:-0.17, ly: 0.15, ls:0.78, ph:1.8, flip:false },
-    { c:'I', lx:-0.09, ly: 0.15, ls:0.78, ph:2.1, flip:false },
-    { c:'S', lx:-0.03, ly: 0.15, ls:0.78, ph:2.4, flip:false },
-    { c:'B', lx: 0.07, ly: 0.15, ls:0.78, ph:2.7, flip:false },
-    { c:'U', lx: 0.18, ly: 0.15, ls:0.78, ph:3.0, flip:false },
-    { c:'R', lx: 0.28, ly: 0.15, ls:0.78, ph:3.3, flip:false },
-    { c:'Y', lx: 0.38, ly: 0.15, ls:0.78, ph:3.6, flip:false },
-    // DESIGN — left-aligns with S of SALISBURY, sized to match JOHN total width
-    { c:'D', lx:-0.40, ly: 0.38, ls:0.66, ph:4.0, flip:false },
-    { c:'E', lx:-0.28, ly: 0.38, ls:0.66, ph:4.1, flip:false },
-    { c:'S', lx:-0.16, ly: 0.38, ls:0.66, ph:4.2, flip:false },
-    { c:'I', lx:-0.05, ly: 0.38, ls:0.66, ph:4.3, flip:false },
-    { c:'G', lx: 0.02, ly: 0.38, ls:0.66, ph:4.4, flip:false },
-    { c:'N', lx: 0.17, ly: 0.38, ls:0.66, ph:4.5, flip:false },
+    // JOHN
+    { c:'J', lx:0.000, ly:-0.22, ls:1.00, ph:0.0, flip:false },
+    { c:'O', lx:0.068, ly:-0.22, ls:1.00, ph:0.3, flip:false },
+    { c:'H', lx:0.148, ly:-0.22, ls:1.00, ph:0.6, flip:false },
+    { c:'N', lx:0.228, ly:-0.22, ls:1.00, ph:0.9, flip:true  },
+    // SALISBURY — same ly as JOHN shifted down by 0.22
+    { c:'S', lx:0.000, ly: 0.00, ls:1.00, ph:1.2, flip:true  },
+    { c:'A', lx:0.068, ly: 0.00, ls:1.00, ph:1.5, flip:false },
+    { c:'L', lx:0.136, ly: 0.00, ls:1.00, ph:1.8, flip:false },
+    { c:'I', lx:0.196, ly: 0.00, ls:1.00, ph:2.1, flip:false },
+    { c:'S', lx:0.222, ly: 0.00, ls:1.00, ph:2.4, flip:false },
+    { c:'B', lx:0.290, ly: 0.00, ls:1.00, ph:2.7, flip:false },
+    { c:'U', lx:0.362, ly: 0.00, ls:1.00, ph:3.0, flip:false },
+    { c:'R', lx:0.434, ly: 0.00, ls:1.00, ph:3.3, flip:false },
+    { c:'Y', lx:0.506, ly: 0.00, ls:1.00, ph:3.6, flip:false },
+    // DESIGN
+    { c:'D', lx:0.000, ly: 0.22, ls:1.00, ph:4.0, flip:false },
+    { c:'E', lx:0.068, ly: 0.22, ls:1.00, ph:4.1, flip:false },
+    { c:'S', lx:0.136, ly: 0.22, ls:1.00, ph:4.2, flip:false },
+    { c:'I', lx:0.196, ly: 0.22, ls:1.00, ph:4.3, flip:false },
+    { c:'G', lx:0.222, ly: 0.22, ls:1.00, ph:4.4, flip:false },
+    { c:'N', lx:0.290, ly: 0.22, ls:1.00, ph:4.5, flip:false },
   ];
+
+  // Row letter counts — used to compute cumulative kerning offsets at render time
+  // Row 0: JOHN (indices 0–3), Row 1: SALISBURY (4–12), Row 2: DESIGN (13–18)
+  const ROW_STARTS = [0, 4, 13];
 
   function buildLetters() {
     letters = [];
-    const baseSize = H * 0.30; // base font size for ls=1.0
+    const baseSize = H * 0.20;  // uniform size for all rows
+    const leftMargin = W * 0.05;
 
     LAYOUT.forEach(def => {
       const size = Math.round(baseSize * def.ls);
       ctx.font = `${size}px ${FACE}`;
       const m = ctx.measureText(def.c);
       const charW = m.width;
-      // ascent approximation for flip pivot
-      const ascent = size * 0.78;
+      // Use actual measured ascent so flip pivot is exact
+      const ascent = m.actualBoundingBoxAscent || size * 0.78;
       letters.push({
         c: def.c,
-        bx: W / 2 + def.lx * W - charW / 2,
+        bx: leftMargin + def.lx * W,
         by: H / 2 + def.ly * H,
         size,
         ph: def.ph,
         flip: def.flip || false,
         charW, ascent,
-        ox: 0, oy: 0,
+        lx: def.lx, // keep for kerning calc
+        row: ROW_STARTS.findIndex((s, i) =>
+          s <= LAYOUT.indexOf(def) && (ROW_STARTS[i+1] === undefined || LAYOUT.indexOf(def) < ROW_STARTS[i+1])
+        ),
+        idxInRow: 0, // filled below
       });
+    });
+
+    // fill idxInRow
+    const rowCounters = [0, 0, 0];
+    letters.forEach(l => {
+      l.idxInRow = rowCounters[l.row]++;
     });
   }
 
@@ -402,9 +424,17 @@
       const floatY = 0;
       if (arrive < 0.01) return;
 
-      const kernWave = Math.sin(t * 0.35 - i * 0.22) * 0.55
-                     + Math.sin(t * 0.13 + i * 0.41) * 0.30;
-      const kernNudge = kernWave * l.charW * 0.14;
+      // Kerning animation: each row expands/contracts as a whole.
+      // A slow sine per row drives a global "tracking" value — all letters
+      // in that row shift outward from the left anchor proportionally.
+      // This makes the word stretch and compress like adjustable tracking.
+      const rowPhase = [0, 1.1, 2.3][l.row] || 0;
+      const trackingWave = Math.sin(t * 0.18 + rowPhase) * 0.6
+                         + Math.sin(t * 0.07 + rowPhase * 0.5) * 0.4;
+      // trackingWave oscillates ±1; map to 0.8–1.6× base spacing
+      const trackingMult = 1.2 + trackingWave * 0.4;
+      // nudge = how far this letter has moved from its base lx, given expanded tracking
+      const kernNudge = l.idxInRow * l.charW * (trackingMult - 1.0) * 0.9;
 
       const rx = l.bx + kernNudge;
       const ry = l.by + floatY;
@@ -415,24 +445,33 @@
       // threshold 0.45 → fires ~20% of the time per letter, rarely in unison
       const blurStrength = Math.max(0, blurSine - 0.45) / 0.55;
 
+      // Flip: rotate 180° around the exact center of the glyph bounding box.
+      // Normal glyph: top edge at (ry - ascent), bottom at ry.
+      // Center: (rx + charW/2,  ry - ascent/2)
+      // Rotating 180° around that point keeps the glyph in the same bounding
+      // box — cap-top stays at same Y, baseline stays at same Y — so the
+      // flipped letter sits perfectly on the row baseline.
+      const flipPivotX = rx + l.charW / 2;
+      const flipPivotY = ry - l.ascent / 2;
+
+      const applyFlip = (ctx2) => {
+        if (l.flip) {
+          ctx2.translate(flipPivotX, flipPivotY);
+          ctx2.rotate(Math.PI);
+          ctx2.translate(-flipPivotX, -flipPivotY);
+        }
+      };
+
       if (blurStrength > 0.01) {
-        // Bloom: draw soft expanding copies of the letter — like light overexposing.
-        // Outer layers: blurred + scaled up, high opacity white — so the letter
-        // looks like it's radiating outward. Core letter dims so energy "moves out".
         const cx = rx + l.charW / 2;
         const cy = ry - l.ascent * 0.5;
         const layers = 8;
 
         for (let k = 1; k <= layers; k++) {
           const frac = k / layers;
-          // Scale: outer copies expand up to 18% beyond the letter
           const scale = 1 + frac * blurStrength * 0.18;
-          // Blur radius grows outward — inner copies sharp, outer soft
           const blurPx = frac * blurStrength * l.size * 0.08;
-          // Alpha: strong at inner layers, fades toward the outer edge
-          // This creates a glowing "halo" that's actually visible
           const ghostAlpha = arrive * blurStrength * (0.55 - frac * 0.48);
-
           if (ghostAlpha < 0.02) continue;
 
           c.save();
@@ -445,19 +484,13 @@
           c.translate(cx, cy);
           c.scale(scale, scale);
           c.translate(-cx, -cy);
-          if (l.flip) {
-            const pivotX = rx + l.charW / 2;
-            const pivotY = ry - l.ascent / 2;
-            c.translate(pivotX, pivotY);
-            c.rotate(Math.PI);
-            c.translate(-pivotX, -pivotY);
-          }
+          applyFlip(c);
           c.fillText(l.c, rx, ry);
           c.restore();
         }
       }
 
-      // Core letter: dims slightly during bloom so the brightness "spreads out"
+      // Core letter
       const coreAlpha = arrive * (1 - blurStrength * 0.35);
       c.save();
       c.globalAlpha = Math.max(0, coreAlpha);
@@ -465,13 +498,7 @@
       c.fillStyle = '#ffffff';
       c.textBaseline = 'alphabetic';
       c.textAlign = 'left';
-      if (l.flip) {
-        const pivotX = rx + l.charW / 2;
-        const pivotY = ry - l.ascent / 2;
-        c.translate(pivotX, pivotY);
-        c.rotate(Math.PI);
-        c.translate(-pivotX, -pivotY);
-      }
+      applyFlip(c);
       c.fillText(l.c, rx, ry);
       c.restore();
     });
