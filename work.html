@@ -109,7 +109,14 @@ footer a{color:inherit;text-transform:none;letter-spacing:0;font-size:14px}
 .controls .count{margin-inline:8px;color:var(--g4);font-variant-numeric:tabular-nums;min-width:5.5ch}
 .controls .close{margin-left:auto;width:auto;padding-inline:16px;border-radius:20px}
 
-.controls .fsbtn svg{width:16px;height:16px}
+.detail .story{margin-top:22px;display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:999px;background:var(--accent);color:var(--ink);font-weight:600;transition:background .2s,color .2s}
+.detail .story:hover{background:var(--ink);color:#fff}
+.controls .ql{color:var(--g4);margin-right:6px}
+.controls{padding-block:18px 4px}
+.endnote{margin:10px 0 0;color:var(--g4);font-size:14.5px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.endnote[hidden]{display:none}
+.endnote .fsbtn{color:var(--accent);font-weight:600}
+.endnote .fsbtn:hover{color:var(--ink)}
 .row.open .slide{cursor:zoom-in}
 
 /* Full screen viewer: image on the left, story panel on the right */
@@ -300,7 +307,7 @@ footer a{color:inherit;text-transform:none;letter-spacing:0;font-size:14px}
 .mnote{display:none}
 @media (max-width:820px){
   .mnote{display:block;margin:0;padding:0 0 12px;color:var(--g4);font-size:14px}
-  .row .cue,.row .fsbtn{display:none}
+  .row .cue,.row .fsbtn,.row .endnote,.controls .ql{display:none}
   .row .media>button{cursor:default}
 }
 .scene .ly.htm .xs{background:#fff;border-radius:.6cqw;overflow:hidden;box-shadow:0 .15cqw .4cqw rgba(17,17,16,.10),0 1.2cqw 2.4cqw -1cqw rgba(17,17,16,.28);font:500 max(8px,.85cqw)/1.2 var(--sans)}
@@ -1394,7 +1401,7 @@ function render(list, el, compact){
       <div class="outcome">${T(c.out)}</div>
       ${c.ctx?`<p class="ctx">${T(c.ctx)}</p>`:""}
       ${c.cred?`<div class="co-creds lbl">${c.cred.map(x=>`<span>${T(x)}</span>`).join("")}</div>`:""}
-      <button class="cue lbl open-btn" aria-expanded="false">View work <span aria-hidden="true">→</span></button>
+      <button class="cue lbl open-btn" aria-expanded="false">Quick look <span aria-hidden="true">→</span></button>
       <div class="detail"><div>
         <div class="role lbl">${T(c.role)}</div>
         <dl>
@@ -1402,13 +1409,15 @@ function render(list, el, compact){
           <div><dt class="lbl">What I led</dt><dd>${T(c.led)}</dd></div>
           <div><dt class="lbl">What happened</dt><dd>${T(c.res)}</dd></div>
         </dl>
+        <button class="fsbtn story lbl">Watch the full story <span aria-hidden="true">▸</span></button>
         <div class="controls">
+          <span class="ql lbl">Quick look</span>
           <button class="prev" aria-label="Previous image">←</button>
           <span class="count lbl">01 / ${pad(listSlides(c).length)}</span>
           <button class="next" aria-label="Next image">→</button>
-          <button class="fsbtn" aria-label="View full screen" title="Full screen (F)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg></button>
           <button class="close lbl">Close</button>
         </div>
+        <p class="endnote" hidden>That's the quick look. <button class="fsbtn lbl">Watch the full story <span aria-hidden="true">▸</span></button></p>
       </div></div>
     </div>
   </article>`).join("");
@@ -1430,6 +1439,7 @@ function updateCount(row){
   const t=row.querySelector(".track"), n=t.children.length;
   const i=Math.min(n-1,Math.round(t.scrollLeft/step(t)));
   row.querySelector(".count").textContent=`${pad(i+1)} / ${pad(n)}`;
+  const en=row.querySelector(".endnote"); if(en) en.hidden=!(n>1&&i===n-1);
 }
 function close(row){
   if(!row) return;
