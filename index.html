@@ -1,569 +1,184 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>John Salisbury</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>John Salisbury Design</title>
+<meta name="description" content="John Salisbury, principal product designer. Twenty years of product design across health data, medical devices, payments and consumer electronics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --paper:#ffffff;--ink:#111110;--g1:#f4f3f1;--g2:#e4e2df;--g3:#a9a6a1;--g4:#64615c;--accent:#f35f12;
+  --sans:"Instrument Sans","Helvetica Neue",Arial,sans-serif;--ease:cubic-bezier(.2,.75,.1,1);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1440px;margin:0 auto;padding-inline:clamp(0px,2.5vw,40px)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.lbl{font-size:12px;letter-spacing:.06em;text-transform:uppercase}
 
-    :root {
-      --bg: #000;
-      --fg: #fff;
-      --dim: rgba(255,255,255,0.3);
-      --faint: rgba(255,255,255,0.09);
-      --mono: 'IBM Plex Mono', 'Courier New', monospace;
-      --display: 'Bebas Neue', 'Arial Narrow', sans-serif;
-      color-scheme: dark;
-    }
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding-block:28px}
+.top .name{font-weight:700}
+.top nav{display:flex;gap:24px}
+.top nav a{color:var(--g4);text-decoration:none}
+.top nav a:hover{color:var(--ink)}
 
-    html, body {
-      background: var(--bg);
-      color: var(--fg);
-      font-family: var(--mono);
-      font-weight: 300;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
+.intro{padding-block:clamp(28px,5vw,72px) clamp(28px,4vw,56px)}
+.intro h1{margin:0;font-size:clamp(1.5rem,2.6vw,2.25rem);line-height:1.18;font-weight:500;letter-spacing:-.02em;max-width:36ch;text-wrap:balance}
+.intro h1 b{font-weight:700;color:var(--accent)}
 
-    /* ── HEADER ── */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.6rem max(24px, env(safe-area-inset-right, 24px))
-               1.6rem max(24px, env(safe-area-inset-left, 24px));
-      border-bottom: 1px solid var(--faint);
-    }
+.group-label{display:flex;justify-content:space-between;padding-block:14px;border-top:2px solid var(--ink);color:var(--g4)}
 
-    .logo {
-      font-size: 10px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--dim);
-    }
+/* Hero work grid */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,3vw,48px) clamp(20px,2.5vw,40px);padding-block:12px 8px}
+.tile{margin:0;display:flex;flex-direction:column;gap:14px;opacity:0;transform:translateY(16px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.tile.in{opacity:1;transform:none}
+.tile.wide{grid-column:1/-1}
+.tile .ph{aspect-ratio:16/10;background:var(--g1);border-radius:2px;overflow:hidden}
+.tile img{display:block;width:100%;height:100%;object-fit:cover}
+.tile figcaption{display:grid;gap:4px}
+.tile .co{font-size:clamp(1.25rem,1.8vw,1.6rem);font-weight:600;line-height:1.1;letter-spacing:-.01em}
+.tile .tag{color:var(--g4)}
+.tile .out{font-size:15.5px;line-height:1.45;color:var(--g4);max-width:52ch}
+.tile.wide .co{font-size:clamp(1.6rem,2.6vw,2.4rem)}
 
-    nav {
-      display: flex;
-      gap: 2rem;
-    }
+.creds{display:flex;flex-wrap:wrap;gap:8px 28px;color:var(--g4);padding-block:20px;border-top:2px solid var(--ink);margin-top:clamp(40px,5vw,72px)}
+.creds span:first-child{color:var(--ink);font-weight:600}
 
-    nav a {
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--dim);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    nav a:hover { color: var(--fg); }
+/* Companies */
+.cos{list-style:none;margin:0;padding:clamp(20px,3vw,40px) 0 0;display:flex;flex-wrap:wrap;gap:.15em .7em;
+  font-size:clamp(1.9rem,4.6vw,4.2rem);font-weight:600;line-height:1.08;letter-spacing:-.025em}
+.cos li{white-space:nowrap}
+.cos li:not(:last-child)::after{content:" /";color:var(--g2);font-weight:400}
+.cos-note{margin:18px 0 0;color:var(--g4);font-size:14.5px}
+section{margin-top:clamp(64px,8vw,120px)}
 
-    /* ── HERO PANEL ── */
-    .hero {
-      position: relative;
-      width: 100%;
-      /* Fixed aspect ratio — the canvas lives here */
-      aspect-ratio: 16 / 7;
-      background: #000;
-      border-bottom: 1px solid var(--faint);
-      overflow: hidden;
-    }
+/* History */
+.hist{list-style:none;margin:0;padding:0}
+.hist li{display:grid;grid-template-columns:minmax(8rem,12rem) minmax(10rem,18rem) 1fr;gap:4px 28px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--g2)}
+.hist .yr{color:var(--g4);font-variant-numeric:tabular-nums;font-size:14.5px}
+.hist .nm{font-weight:600}
+.hist .rl{color:var(--ink)}
+.hist .rl span{display:block;color:var(--g4);font-size:14.5px;margin-top:2px}
 
-    #heroCanvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
+/* About */
+.about{--bar:10px;--ap:clamp(28px,3.5vw,52px);position:relative;display:grid;grid-template-columns:minmax(12rem,17rem) minmax(0,1fr);align-items:start;gap:28px;padding-block:calc(var(--bar) + var(--ap)) var(--ap)}
+.about::before{content:"";position:absolute;left:0;right:0;top:0;height:var(--bar);background:var(--accent)}
+.about-side{display:flex;flex-direction:column;gap:16px}
+.portrait{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;border-radius:2px}
+.about .body{padding-top:34px}
+.about p{margin:0 0 1em;font-size:clamp(1.1rem,1.6vw,1.35rem);line-height:1.5;max-width:58ch;text-wrap:pretty}
+.about p:last-child{margin-bottom:0}
+.cta{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:999px;background:var(--accent);color:var(--ink);font-weight:600;text-decoration:none;transition:background .2s,color .2s}
+.btn:hover{background:var(--ink);color:#fff}
+.cta a.plain{color:var(--g4)}
 
-    /* ── FOOTER STRIP ── */
-    .footer-strip {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 3rem;
-      padding: 0.9rem max(24px, env(safe-area-inset-left, 24px));
-      border-bottom: 1px solid var(--faint);
-    }
+footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding-block:28px 48px;margin-top:clamp(48px,6vw,88px);color:var(--g4);border-top:1px solid var(--g2)}
+footer a{text-transform:none;letter-spacing:0;font-size:14px}
 
-    .footer-strip-item {
-      flex: none;
-    }
-
-    .strip-label {
-      font-size: 7px;
-      letter-spacing: 0.26em;
-      text-transform: uppercase;
-      color: var(--faint);
-      display: block;
-      margin-bottom: 0.3rem;
-    }
-
-    .strip-value {
-      font-family: var(--display);
-      font-size: clamp(9px, 1.1vw, 15px);
-      letter-spacing: 0.06em;
-      color: var(--fg);
-      line-height: 1;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      display: flex;
-      justify-content: space-between;
-      padding: 1.4rem max(24px, env(safe-area-inset-right, 24px))
-               1.4rem max(24px, env(safe-area-inset-left, 24px));
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    footer span {
-      font-size: 9px;
-      letter-spacing: 0.12em;
-      color: rgba(255,255,255,0.16);
-    }
-
-    @media (max-width: 600px) {
-      .footer-strip { flex-direction: column; }
-      .footer-strip-item { border-right: none; border-bottom: 1px solid var(--faint); }
-      .footer-strip-item:last-child { border-bottom: none; }
-      .bottom { grid-template-columns: 1fr; }
-      .bottom-cell { border-right: none; border-bottom: 1px solid var(--faint); }
-      .bottom-cell:last-child { border-bottom: none; }
-      .hero { aspect-ratio: 4 / 3; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; }
-    }
-  </style>
+@media (max-width:820px){
+  .grid{grid-template-columns:1fr}
+  .hist li{grid-template-columns:1fr;gap:2px}
+  .about{grid-template-columns:1fr}
+  .portrait{max-width:280px}
+  .about .body{padding-top:0}
+  .top nav{gap:16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.tile{opacity:1;transform:none}}
+</style>
 </head>
 <body>
-
-  <header>
-    <span class="logo">John Salisbury</span>
-    <nav>
-      <a href="#practice">Practice</a>
-      <a href="#about">About</a>
-      <a href="mailto:john.salisbury@adaptivstudios.com">Contact</a>
-    </nav>
+<div class="wrap">
+  <header class="top">
+    <span class="name">John Salisbury</span>
+    <nav class="lbl" aria-label="Sections"><a href="#work">Work</a><a href="#history">History</a><a href="#about">About</a><a href="mailto:johnsalisbury5@gmail.com">Contact</a></nav>
   </header>
 
-  <!-- ── HERO: animated canvas ── -->
-  <div class="hero">
-    <canvas id="heroCanvas" aria-label="John Salisbury Design"></canvas>
-  </div>
+  <section class="intro" style="margin-top:0">
+    <h1>Product designer for <b>twenty years</b>, often the first designer in the room. I turn complex, regulated and hardware-bound problems into products that ship, and lately I build with AI.</h1>
+  </section>
 
-  <!-- ── PRACTICE STRIP ── -->
-  <div class="footer-strip" id="practice">
-    <div class="footer-strip-item">
-      <span class="strip-label">01</span>
-      <div class="strip-value">UX &amp; Product</div>
+  <main id="work">
+    <div class="group-label lbl"><span>Selected work</span><span>08</span></div>
+    <div class="grid">
+      <figure class="tile"><div class="ph"><img src="img/home/lead-0.webp" alt="Truveta notes search on a desktop monitor, flanked by an AI trial-planning concept and design-system checks" width="2400" height="1500"></div>
+        <figcaption><span class="tag lbl">Truveta · 2022–now</span><span class="co">Notes Annotation and Studio</span><span class="out">Turned unstructured doctors' notes into structured research data, as sole designer of the annotation tool.</span></figcaption></figure>
+      <figure class="tile"><div class="ph"><img src="img/home/lead-1.webp" alt="vMap mapping result: an ECG beside a 3D heart" loading="lazy" width="2400" height="1500"></div>
+        <figcaption><span class="tag lbl">Vektor Medical · 2019–20</span><span class="co">vMap</span><span class="out">A university research prototype became an FDA-cleared clinical product.</span></figcaption></figure>
+      <figure class="tile"><div class="ph"><img src="img/home/lead-2.webp" alt="BioFire SPOTFIRE module stack beside its dashboard" loading="lazy" width="2400" height="1500"></div>
+        <figcaption><span class="tag lbl">BioFire · 2017–18, 2023–24</span><span class="co">SPOTFIRE</span><span class="out">Lab-grade diagnostics a clinic can run. Shipped as designed.</span></figcaption></figure>
+      <figure class="tile"><div class="ph"><img src="img/home/lead-3.webp" alt="Verifone payment terminal family sharing one interface" loading="lazy" width="2400" height="1500"></div>
+        <figcaption><span class="tag lbl">Verifone · 2016–18</span><span class="co">Payment terminals</span><span class="out">One design language for every Verifone terminal, high end to low.</span></figcaption></figure>
+      <figure class="tile"><div class="ph"><img src="img/home/lead-4.webp" alt="Three generations of the Jitterbug smartphone home screen" loading="lazy" width="2400" height="1500"></div>
+        <figcaption><span class="tag lbl">GreatCall · 2011–13</span><span class="co">Jitterbug Touch</span><span class="out">The core of the interface I designed in 2012 still ships today.</span></figcaption></figure>
+      <figure class="tile"><div class="ph"><img src="img/home/lead-5.webp" alt="Sony Bravia Favorites menu over live TV" loading="lazy" width="2400" height="1500"></div>
+        <figcaption><span class="tag lbl">Sony · 2007</span><span class="co">Bravia Favorites</span><span class="out">A hardware limit became the idea. Shipped in Bravia; adopted for Japan.</span></figcaption></figure>
+      <figure class="tile"><div class="ph"><img src="img/home/lead-6.webp" alt="Kyocera Rio touchscreen phone in its retail box" loading="lazy" width="2400" height="1500"></div>
+        <figcaption><span class="tag lbl">Kyocera · 2005–10</span><span class="co">Rio</span><span class="out">Led the Rio touchscreen phone from paper prototypes to launch.</span></figcaption></figure>
+      <figure class="tile"><div class="ph"><img src="img/home/lead-7.webp" alt="Truinject injection-trainer app on two iPads" loading="lazy" width="2400" height="1500"></div>
+        <figcaption><span class="tag lbl">Truinject · 2018</span><span class="co">Injection trainer</span><span class="out">Injection training navigated by the face itself. Shipped.</span></figcaption></figure>
     </div>
-    <div class="footer-strip-item">
-      <span class="strip-label">02</span>
-      <div class="strip-value">Brand &amp; Conceptual</div>
-    </div>
-    <div class="footer-strip-item">
-      <span class="strip-label">03</span>
-      <div class="strip-value">Motion &amp; Experiments</div>
-    </div>
-  </div>
+    <div class="creds lbl" aria-label="Credentials"><span>Sony Presidential Award (TVOA, FY2007)</span><span>9 U.S. patents and applications</span><span>Eos design awards</span><span>200+ designers mentored</span><span>DARPA field app</span></div>
+  </main>
 
-  <footer>
-    <span>© 2026 John Salisbury</span>
-    <span>johnsalisburydesign.com</span>
+  <section id="companies">
+    <div class="group-label lbl"><span>Companies and clients</span></div>
+    <ul class="cos">
+      <li>Truveta</li><li>BioFire</li><li>bioMérieux</li><li>Vektor Medical</li><li>Verifone</li><li>Truinject</li><li>Intuit</li><li>GreatCall</li><li>ecoATM</li><li>Tactel</li><li>Sony</li><li>Kyocera</li>
+    </ul>
+  </section>
+
+  <section id="history">
+    <div class="group-label lbl"><span>History</span></div>
+    <ol class="hist">
+      <li><span class="yr">2022–now</span><span class="nm">Truveta</span><span class="rl">Principal Product Designer<span>Health-data and AI/ML platform. Clinical notes annotation, research tools, AI-native design practice.</span></span></li>
+      <li><span class="yr">2018–now</span><span class="nm">John Salisbury Design</span><span class="rl">Founder and Principal Designer<span>Independent consulting for healthcare, AI and hardware clients.</span></span></li>
+      <li><span class="yr">2018–2022</span><span class="nm">MFD Design</span><span class="rl">Principal UX Designer<span>Medical product design. Co-founded and led the UX practice.</span></span></li>
+      <li><span class="yr">2016–2018</span><span class="nm">Verifone</span><span class="rl">Senior Interaction Designer<span>One of the first designers in an engineering-led company.</span></span></li>
+      <li><span class="yr">2014–2015</span><span class="nm">Intuit</span><span class="rl">Senior Experience Designer (contract)</span></li>
+      <li><span class="yr">2010, 2013–14</span><span class="nm">Tactel US</span><span class="rl">Experience Design Manager, Creative Director<span>Directed UX across two offices, including a DARPA field app.</span></span></li>
+      <li><span class="yr">2011–2013</span><span class="nm">Craftlab</span><span class="rl">Founder and Principal Designer<span>GreatCall's outside design partner; ecoATM's first kiosk.</span></span></li>
+      <li><span class="yr">2007–2008</span><span class="nm">Sony Electronics</span><span class="rl">Senior UX Designer<span>North American Bravia TV line. Sony Presidential Award.</span></span></li>
+      <li><span class="yr">2005–07, 2008–10</span><span class="nm">Kyocera Wireless</span><span class="rl">Senior UX Designer, UI Designer<span>First Android touchscreen phone and the Rio.</span></span></li>
+      <li><span class="yr">Before 2005</span><span class="nm">Print production</span><span class="rl">A decade on press and in prepress<span>Color, separations and precision, before ever designing a screen.</span></span></li>
+    </ol>
+  </section>
+
+  <section class="about" id="about">
+    <div class="about-side">
+      <div class="lbl" style="color:var(--g4)">About</div>
+      <img class="portrait" src="img/home/portrait.webp" alt="Black and white portrait of John Salisbury">
+    </div>
+    <div class="body">
+      <p>I came to UX from a decade in print production. I learned color and precision on a press before I ever designed a screen, then joined Kyocera in 2005 and have led product design ever since, from phones and TVs to payment terminals, medical devices and clinical data.</p>
+      <p>I care about how products sound, not just how they look. I shaped product sound on the Kyocera Rio and Verifone's terminals.</p>
+      <p>I've mentored more than 200 designers through CareerFoundry. Today I consult as John Salisbury Design, from Fallbrook, California and Washington, DC.</p>
+      <div class="cta">
+        <a class="btn" href="files/John-Salisbury-Resume.pdf" download>↓ Résumé (PDF)</a>
+        <a class="plain" href="mailto:johnsalisbury5@gmail.com">johnsalisbury5@gmail.com</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="lbl">
+    <span>John Salisbury Design</span>
+    <a href="mailto:johnsalisbury5@gmail.com">johnsalisbury5@gmail.com</a>
   </footer>
-
+</div>
 <script>
-;(function () {
-  const canvas = document.getElementById('heroCanvas');
-  const ctx = canvas.getContext('2d');
-
-  const FACE = "'Bebas Neue', 'Arial Narrow', sans-serif";
-
-  // Layout: two lines + "DESIGN" label
-  // Letters are spaced out — readable but typographically loose,
-  // like a title set with intentional tracked gaps.
-  // Each letter has a fixed proportional position.
-
-  let W, H, dpr;
-  let letters = [];
-  let raf;
-
-  // --- ANIMATION STATE ---
-  // We use a "posterize time" / frame-echo approach:
-  // - A hidden offscreen buffer receives smooth animation
-  // - We composite the buffer onto the canvas at a STEPPED rate (e.g. 12fps)
-  //   using additive blending — older frames linger at low opacity
-  // - This creates the AE "echo" / trace / posterize-time look
-  const TRAIL_FRAMES = 6;     // how many echo frames to keep
-  const STEP_FPS = 10;        // stepped frame rate (posterize time)
-  let trail = [];             // circular buffer of ImageData snapshots
-  let lastStep = 0;
-  let globalT = 0;
-
-  // Each letter: char, proportional x/y from center, relative size, phase offset
-  // Laid out so JOHN is one row, SALISBURY below — but with generous tracking
-  // and slight vertical offset variation for typographic interest.
-  // DESIGN sits smaller, bottom right as a descriptor.
-
-  // Layout: left-aligned block, anchored to a left margin.
-  // lx = offset from left margin (as fraction of W), ly = offset from vertical center.
-  // ls = relative size. Letters tracked wide so they spread rightward.
-  // Base size reduced to ~22% of H (was 30%) so the block is more compact.
-  // Left margin: 0.05W
-
-  // All three rows same font size (ls:1.00 everywhere).
-  // lx values are base positions — the kerning animation will spread/contract
-  // letters horizontally from these anchors at runtime.
-  // Tighter base tracking than before (~50% of previous gap).
-
-  // All rows same size. ly values are baseline positions from canvas center.
-  // Row spacing = 0.22H so three rows sit evenly centered in the panel.
-  // The flipped S in SALISBURY rotates around its own baseline/center,
-  // so its ly must match the rest of the row exactly.
-
-  const LAYOUT = [
-    // JOHN
-    { c:'J', lx:0.000, ly:-0.22, ls:1.00, ph:0.0, flip:false },
-    { c:'O', lx:0.068, ly:-0.22, ls:1.00, ph:0.3, flip:false },
-    { c:'H', lx:0.148, ly:-0.22, ls:1.00, ph:0.6, flip:false },
-    { c:'N', lx:0.228, ly:-0.22, ls:1.00, ph:0.9, flip:true  },
-    // SALISBURY — same ly as JOHN shifted down by 0.22
-    { c:'S', lx:0.000, ly: 0.00, ls:1.00, ph:1.2, flip:true  },
-    { c:'A', lx:0.068, ly: 0.00, ls:1.00, ph:1.5, flip:false },
-    { c:'L', lx:0.136, ly: 0.00, ls:1.00, ph:1.8, flip:false },
-    { c:'I', lx:0.196, ly: 0.00, ls:1.00, ph:2.1, flip:false },
-    { c:'S', lx:0.222, ly: 0.00, ls:1.00, ph:2.4, flip:false },
-    { c:'B', lx:0.290, ly: 0.00, ls:1.00, ph:2.7, flip:false },
-    { c:'U', lx:0.362, ly: 0.00, ls:1.00, ph:3.0, flip:false },
-    { c:'R', lx:0.434, ly: 0.00, ls:1.00, ph:3.3, flip:false },
-    { c:'Y', lx:0.506, ly: 0.00, ls:1.00, ph:3.6, flip:false },
-    // DESIGN
-    { c:'D', lx:0.000, ly: 0.22, ls:1.00, ph:4.0, flip:false },
-    { c:'E', lx:0.068, ly: 0.22, ls:1.00, ph:4.1, flip:false },
-    { c:'S', lx:0.136, ly: 0.22, ls:1.00, ph:4.2, flip:false },
-    { c:'I', lx:0.196, ly: 0.22, ls:1.00, ph:4.3, flip:false },
-    { c:'G', lx:0.222, ly: 0.22, ls:1.00, ph:4.4, flip:false },
-    { c:'N', lx:0.290, ly: 0.22, ls:1.00, ph:4.5, flip:false },
-  ];
-
-  // Row letter counts — used to compute cumulative kerning offsets at render time
-  // Row 0: JOHN (indices 0–3), Row 1: SALISBURY (4–12), Row 2: DESIGN (13–18)
-  const ROW_STARTS = [0, 4, 13];
-
-  function buildLetters() {
-    letters = [];
-    const baseSize = H * 0.20;  // uniform size for all rows
-    const leftMargin = W * 0.05;
-
-    LAYOUT.forEach(def => {
-      const size = Math.round(baseSize * def.ls);
-      ctx.font = `${size}px ${FACE}`;
-      const m = ctx.measureText(def.c);
-      const charW = m.width;
-      // Use actual measured ascent so flip pivot is exact
-      const ascent = m.actualBoundingBoxAscent || size * 0.78;
-      letters.push({
-        c: def.c,
-        bx: leftMargin + def.lx * W,
-        by: H / 2 + def.ly * H,
-        size,
-        ph: def.ph,
-        flip: def.flip || false,
-        charW, ascent,
-        lx: def.lx, // keep for kerning calc
-        row: ROW_STARTS.findIndex((s, i) =>
-          s <= LAYOUT.indexOf(def) && (ROW_STARTS[i+1] === undefined || LAYOUT.indexOf(def) < ROW_STARTS[i+1])
-        ),
-        idxInRow: 0, // filled below
-      });
-    });
-
-    // fill idxInRow
-    const rowCounters = [0, 0, 0];
-    letters.forEach(l => {
-      l.idxInRow = rowCounters[l.row]++;
-    });
-  }
-
-  function setup() {
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    W = canvas.offsetWidth;
-    H = canvas.offsetHeight;
-    canvas.width  = W * dpr;
-    canvas.height = H * dpr;
-    ctx.scale(dpr, dpr);
-    trail = [];
-    buildLetters();
-  }
-
-  // Draw one "true" frame into the context
-  function drawFrame(t) {
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, W, H);
-
-    letters.forEach(l => {
-      // Each letter fades in with a staggered phase, then gently breathes
-      const arrive = Math.min(1, Math.max(0, (t - l.ph * 0.6) / 1.4));
-      const breathe = Math.sin(t * 0.6 + l.ph) * 0.012;
-
-      // Slight vertical float per letter, staggered
-      const floatY = 0;
-
-      const alpha = arrive;
-
-      if (alpha < 0.01) return;
-
-      ctx.save();
-      ctx.globalAlpha = alpha;
-      ctx.font = `${l.size}px ${FACE}`;
-      ctx.fillStyle = '#ffffff';
-      ctx.textBaseline = 'alphabetic';
-      ctx.textAlign = 'left';
-      ctx.fillText(l.c, l.bx, l.by + floatY);
-      ctx.restore();
-    });
-  }
-
-  // Stepped + trail composite (posterize-time echo look)
-  function renderLoop(timestamp) {
-    globalT += 0.016; // ~60fps increment
-
-    const stepInterval = 1000 / STEP_FPS;
-
-    if (timestamp - lastStep >= stepInterval) {
-      lastStep = timestamp;
-
-      // Draw the "true" current frame into an offscreen canvas
-      const offscreen = document.createElement('canvas');
-      offscreen.width = W * dpr;
-      offscreen.height = H * dpr;
-      const octx = offscreen.getContext('2d');
-      octx.scale(dpr, dpr);
-
-      // Temporarily swap context, draw, swap back
-      const origFont = ctx.font;
-      drawFrameToCtx(octx, globalT);
-
-      // Grab pixel snapshot
-      const snap = octx.getImageData(0, 0, W * dpr, H * dpr);
-      trail.push(snap);
-      if (trail.length > TRAIL_FRAMES) trail.shift();
-
-      // Composite: black fill first, then each trail frame at decreasing alpha
-      ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = '#000';
-      ctx.fillRect(0, 0, W, H);
-
-      trail.forEach((frame, i) => {
-        const age = trail.length - 1 - i; // 0 = newest
-        // Older frames are fainter and slightly offset (echo / trace)
-        const alpha = age === 0 ? 1.0 : Math.pow(0.45, age) * 0.7;
-        const offX = age * 1.5; // slight rightward trace of older frames
-        const offY = age * 0.4;
-
-        // Draw the snapshot
-        const tmp = document.createElement('canvas');
-        tmp.width = W * dpr;
-        tmp.height = H * dpr;
-        const tctx = tmp.getContext('2d');
-        tctx.putImageData(frame, 0, 0);
-
-        ctx.save();
-        ctx.globalAlpha = alpha;
-        // Translate offset in device pixels
-        ctx.drawImage(tmp, -offX * dpr, -offY * dpr, W + offX * 2, H + offY * 2);
-        ctx.restore();
-      });
-    }
-
-    raf = requestAnimationFrame(renderLoop);
-  }
-
-  // Vertical line grid with slow color washes.
-  // Three color "pools" drift across the canvas independently —
-  // deep rust, dark crimson, muted navy — each a gaussian-shaped
-  // band of color that tints the lines it passes over.
-  // Base lines are still near-white; color is additive and very subtle.
-
-  const COLOR_POOLS = [
-    { r: 160, g: 40,  b: 20  }, // rust / burnt orange
-    { r: 100, g: 15,  b: 30  }, // dark crimson
-    { r: 20,  g: 30,  b: 90  }, // muted navy
-  ];
-
-  function poolColor(i, normX, t) {
-    // Each pool has its own slow drift and width
-    const speeds   = [0.07, 0.05, 0.06];
-    const offsets  = [0.25, 0.65, 0.45];
-    const widths   = [0.30, 0.25, 0.35];
-    const bobs     = [0.11, 0.09, 0.13]; // side-to-side amplitude
-
-    let r = 0, g = 0, b = 0;
-
-    COLOR_POOLS.forEach((col, pi) => {
-      const center = offsets[pi]
-                   + Math.sin(t * speeds[pi] + pi * 2.1) * bobs[pi]
-                   + Math.cos(t * speeds[pi] * 0.4 + pi) * bobs[pi] * 0.5;
-      const dist = Math.abs(normX - center) / widths[pi];
-      const strength = Math.exp(-dist * dist * 3.5) * 0.55; // gaussian falloff
-      r += col.r * strength;
-      g += col.g * strength;
-      b += col.b * strength;
-    });
-
-    return { r: Math.min(255, r), g: Math.min(255, g), b: Math.min(255, b) };
-  }
-
-  function drawGrid(c, t) {
-    const numLines = 260;
-    const step = W / numLines;
-
-    c.save();
-    for (let i = 0; i < numLines; i++) {
-      const x = i * step + step / 2;
-      const normX = i / numLines;
-
-      // Travelling wave for line width — more variation than before
-      const wave = Math.sin(t * 0.5  - i * 0.08) * 0.50
-                 + Math.sin(t * 0.18 + i * 0.03) * 0.30
-                 + Math.sin(t * 0.09 - i * 0.02) * 0.12
-                 + Math.sin(t * 0.31 + i * 0.11) * 0.08;
-      const lw = step * (0.45 + wave * 0.55);
-
-      // Base white + color tint from drifting pools
-      const col = poolColor(i, normX, t);
-      // Mix: white base tinted by color pools
-      const rr = Math.round(Math.min(255, 200 + col.r * 0.5));
-      const gg = Math.round(Math.min(255, 200 + col.g * 0.5));
-      const bb = Math.round(Math.min(255, 200 + col.b * 0.5));
-
-      c.strokeStyle = `rgba(${rr},${gg},${bb},0.22)`;
-      c.lineWidth = Math.max(0.3, lw);
-      c.beginPath();
-      c.moveTo(x, 0);
-      c.lineTo(x, H);
-      c.stroke();
-    }
-    c.restore();
-  }
-
-  function drawFrameToCtx(c, t) {
-    c.clearRect(0, 0, W, H);
-    c.fillStyle = '#000';
-    c.fillRect(0, 0, W, H);
-
-    drawGrid(c, t);
-
-    letters.forEach((l, i) => {
-      const arrive = Math.min(1, Math.max(0, (t - l.ph * 0.6) / 1.4));
-      const floatY = 0;
-      if (arrive < 0.01) return;
-
-      // Kerning animation: each row expands/contracts as a whole.
-      // A slow sine per row drives a global "tracking" value — all letters
-      // in that row shift outward from the left anchor proportionally.
-      // This makes the word stretch and compress like adjustable tracking.
-      const rowPhase = [0, 1.1, 2.3][l.row] || 0;
-      const trackingWave = Math.sin(t * 0.18 + rowPhase) * 0.6
-                         + Math.sin(t * 0.07 + rowPhase * 0.5) * 0.4;
-      // trackingWave oscillates ±1; map to 0.8–1.6× base spacing
-      const trackingMult = 1.2 + trackingWave * 0.4;
-      // nudge = how far this letter has moved from its base lx, given expanded tracking
-      const kernNudge = l.idxInRow * l.charW * (trackingMult - 1.0) * 0.9;
-
-      const rx = l.bx + kernNudge;
-      const ry = l.by + floatY;
-
-      // Sparse bloom: two sines multiplied → spikes above threshold independently per letter
-      const blurSine = Math.sin(t * 0.6 + i * 1.37)
-                     * Math.sin(t * 0.25 + i * 0.83);
-      // threshold 0.45 → fires ~20% of the time per letter, rarely in unison
-      const blurStrength = Math.max(0, blurSine - 0.45) / 0.55;
-
-      // Flip: rotate 180° around the exact center of the glyph bounding box.
-      // Normal glyph: top edge at (ry - ascent), bottom at ry.
-      // Center: (rx + charW/2,  ry - ascent/2)
-      // Rotating 180° around that point keeps the glyph in the same bounding
-      // box — cap-top stays at same Y, baseline stays at same Y — so the
-      // flipped letter sits perfectly on the row baseline.
-      const flipPivotX = rx + l.charW / 2;
-      const flipPivotY = ry - l.ascent / 2;
-
-      const applyFlip = (ctx2) => {
-        if (l.flip) {
-          ctx2.translate(flipPivotX, flipPivotY);
-          ctx2.rotate(Math.PI);
-          ctx2.translate(-flipPivotX, -flipPivotY);
-        }
-      };
-
-      if (blurStrength > 0.01) {
-        const cx = rx + l.charW / 2;
-        const cy = ry - l.ascent * 0.5;
-        const layers = 8;
-
-        for (let k = 1; k <= layers; k++) {
-          const frac = k / layers;
-          const scale = 1 + frac * blurStrength * 0.18;
-          const blurPx = frac * blurStrength * l.size * 0.08;
-          const ghostAlpha = arrive * blurStrength * (0.55 - frac * 0.48);
-          if (ghostAlpha < 0.02) continue;
-
-          c.save();
-          c.globalAlpha = ghostAlpha;
-          if (blurPx > 0.5) c.filter = `blur(${blurPx.toFixed(1)}px)`;
-          c.font = `${l.size}px ${FACE}`;
-          c.fillStyle = '#ffffff';
-          c.textBaseline = 'alphabetic';
-          c.textAlign = 'left';
-          c.translate(cx, cy);
-          c.scale(scale, scale);
-          c.translate(-cx, -cy);
-          applyFlip(c);
-          c.fillText(l.c, rx, ry);
-          c.restore();
-        }
-      }
-
-      // Core letter
-      const coreAlpha = arrive * (1 - blurStrength * 0.35);
-      c.save();
-      c.globalAlpha = Math.max(0, coreAlpha);
-      c.font = `${l.size}px ${FACE}`;
-      c.fillStyle = '#ffffff';
-      c.textBaseline = 'alphabetic';
-      c.textAlign = 'left';
-      applyFlip(c);
-      c.fillText(l.c, rx, ry);
-      c.restore();
-    });
-  }
-
-  function init() {
-    setup();
-    raf = requestAnimationFrame(renderLoop);
-  }
-
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(init);
-  } else {
-    setTimeout(init, 400);
-  }
-
-  window.addEventListener('resize', () => {
-    cancelAnimationFrame(raf);
-    setup();
-    raf = requestAnimationFrame(renderLoop);
-  });
+(function(){
+  var tiles=document.querySelectorAll('.tile');
+  if(!('IntersectionObserver' in window)){tiles.forEach(function(t){t.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{rootMargin:'0px 0px -8% 0px'});
+  tiles.forEach(function(t){io.observe(t)});
 })();
 </script>
-
 </body>
 </html>
