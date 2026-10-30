@@ -38,14 +38,16 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .top nav{display:flex;gap:24px}
 .top nav a{color:var(--g4);text-decoration:none}
 .top nav a:hover{color:var(--ink)}
-.top .right{display:flex;align-items:baseline;gap:28px;flex-wrap:wrap;justify-content:flex-end}
-.mode{display:inline-flex;align-self:center;border:1px solid var(--ink);border-radius:999px;padding:2px}
-.mode a,.mode span{padding:6px 14px;border-radius:999px;text-decoration:none;color:var(--ink);line-height:1}
-.mode [aria-current]{background:var(--ink);color:#fff}
-.mode a:hover{background:var(--g1)}
 .detail .live{margin:22px 0 0 10px;display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;border:1px solid var(--ink);color:var(--ink);text-decoration:none;font-weight:600}
 .detail .live:hover{background:var(--ink);color:#fff}
-@media (max-width:640px){.top{flex-wrap:wrap}.top .right{gap:16px}.detail .live{margin-left:0}}
+.more{margin-top:88px;border-top:2px solid var(--ink);padding-top:22px}
+.more-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px 40px}
+.more-t{margin:6px 0 0;font-size:clamp(1.15rem,1.8vw,1.5rem);line-height:1.25;font-weight:500;letter-spacing:-.01em;max-width:40ch}
+.more-btn{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:999px;border:1px solid var(--ink);font-weight:600}
+.more-btn:hover{background:var(--ink);color:#fff}
+#productWork{padding-top:48px}
+#productWork .back{margin-top:40px}
+@media (max-width:640px){.detail .live{margin-left:0}}
 .intro{padding-block:clamp(28px,5vw,72px) clamp(28px,4vw,56px);display:grid;gap:22px}
 .intro h1{margin:0;font-size:clamp(1.5rem,2.6vw,2.25rem);line-height:1.18;font-weight:500;letter-spacing:-.02em;max-width:36ch;text-wrap:balance}
 .intro h1 b{font-weight:700;color:var(--accent)}
@@ -426,10 +428,7 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;paddin
 <div class="wrap">
   <header class="top">
     <a class="name" href="/" style="color:inherit;text-decoration:none">John Salisbury</a>
-    <div class="right">
-      <nav class="lbl"><a href="#work">Work</a><a href="#about">About</a><a href="#resume">Résumé</a></nav>
-      <div class="mode lbl" role="group" aria-label="Work type"><span aria-current="page">Brand</span><a href="/work">Product</a></div>
-    </div>
+    <nav class="lbl"><a href="#work">Work</a><a href="#about">About</a><a href="#resume">Résumé</a></nav>
   </header>
 
   <section class="intro">
@@ -443,6 +442,21 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;paddin
     <div class="creds lbl" aria-label="Credentials"><span>Transworld Stance redesign, with Shepard Fairey&rsquo;s studio</span><span>A decade in print and prepress</span><span>Original ecoATM logo</span><span>20 years in design</span></div>
     <div class="group-label lbl" style="margin-top:72px" hidden><span>Earlier work</span><span id="n2"></span></div>
     <div id="earlier" hidden></div>
+    <section class="more" id="product" aria-labelledby="moreT">
+      <div class="more-head">
+        <div><div class="lbl" style="color:var(--g4)">Also</div><p class="more-t" id="moreT">Twenty years of product design: medical devices, payment terminals, clinical data and consumer electronics.</p></div>
+        <button class="more-btn lbl" id="moreBtn" aria-expanded="false" aria-controls="productWork">Show product work <span aria-hidden="true">↓</span></button>
+      </div>
+      <div id="productWork" hidden>
+        <div class="group-label lbl"><span>Selected product work</span><span id="n3"></span></div>
+        <div id="pFeatured"></div>
+        <div class="creds lbl" aria-label="Credentials"><span>Sony Presidential Award (TVOA, FY2007)</span><span>9 U.S. patents and applications</span><span>Eos design awards</span><span>200+ designers mentored</span><span>DARPA field app</span></div>
+        <div class="group-label lbl" style="margin-top:72px"><span>Earlier product work</span><span id="n4"></span></div>
+        <div id="pEarlier"></div>
+        <p class="also">Also: the original ecoATM logo and the UI of its first kiosk (2011–12, with DD Studios)</p>
+        <button class="more-btn lbl back" id="backBtn">Back to brand work <span aria-hidden="true">↑</span></button>
+      </div>
+    </section>
   </main>
 
   <section class="about" id="about">
@@ -964,7 +978,365 @@ const SELECTED = [
 ];
 
 const EARLIER = [];
-const byKey = Object.fromEntries([...SELECTED, ...EARLIER].map(c=>[key(c),c]));
+const P_SELECTED = [
+  pick("vektormedical", {n:"vMap", tag:"Vektor Medical · 2019–20", role:"Design lead",
+    out:"A university research prototype became an FDA-cleared clinical product.",
+    why:"Vektor was turning UC San Diego research software, which maps where an arrhythmia starts from a standard ECG, into a product.",
+    led:"Led design with the founders, an outside engineering firm and a usability lab, and wrote the documentation: blueprint, developer guide and instructions for use.",
+    res:"vMap received FDA 510(k) clearance in November 2021.",
+    use:[0,1,2,3,4]}),
+
+  pick("biofire", {n:"SPOTFIRE", tour:1, tag:"BioFire · 2017–18, 2023–24", role:"Design lead",
+    out:"Lab-grade diagnostics a clinic can run. Shipped as designed.",
+    why:"Moving PCR testing from the lab to the point of care only works if anyone in a clinic can run it.",
+    led:"Built the dashboard around the hardware: one on-screen plate per stacked module. Led every prototype and the client relationship, through two rounds of user testing and a 57-page developer spec.",
+    res:"It shipped as designed, and BioFire hired me back for their internal tools.",
+    use:[0,1,3,5,{from:"biofiresoftware",i:3}]}),
+
+  pick("verifone", {n:"Payment terminals", tour:1, tag:"Verifone · 2016–18", role:"Design lead",
+    out:"One design language for every Verifone terminal, high end to low.",
+    why:"Terminal design had splintered across separate teams and locations in an engineering-led company.",
+    led:"As one of Verifone's first designers, in an engineering-led company, I ran the design-language workshop and brought separate teams and locations onto one system. I also redesigned the remove-card sound.",
+    res:"The language carried across the terminal family and into new device explorations.",
+    use:[
+      {c:"One language, every terminal", note:{title:"One language, every terminal", body:"The same design language across Verifone's terminal family, from the countertop unit to the smallest handheld."},
+       scene:{auto:1, layers:[
+        {id:"ln", src:"img/vf/lead.webp?v=3", cls:"flat", x:0, y:0, w:1, z:1, o:1, sh:0}],
+        steps:[
+         {t:"The terminal family", hold:3500, d:"One design language across every Verifone terminal: menus, lists, reports and confirmations, from countertop to handheld.", set:{ln:{o:1}}}]}},
+      {c:"Phase 1: tightening what existed", note:{title:"Phase 1: tightening what existed", body:"Before the design language, I cleaned up the terminal UI already in development: one information architecture, a UI spec and a style guide, built with software leads."},
+       scene:{auto:1, rowAt:2, layers:[
+        {id:"bg", html:'<div class="jb-bg"></div>', cls:"flat", x:0, y:0, w:1, z:0, o:1, sh:0},
+        {id:"acp", src:"img/vf/cp2.png", cls:"flat cut", x:0.2301, y:0.1600, w:0.2598, z:2, o:0, sh:0},
+        {id:"acpl", html:'<div class="tag2"><div class="ck">Legacy UI</div><div class="cv">What the terminals shipped with</div></div>', cls:"flat", x:0.1901, y:0.7000, w:0.2598, z:3, o:0, sh:0},
+        {id:"aedg", src:"img/vf/edg2.png", cls:"flat cut", x:0.5799, y:0.1600, w:0.2700, z:2, o:0, sh:0},
+        {id:"aedgl", html:'<div class="tag2"><div class="ck">New UI</div><div class="cv">Updated to the current brand</div></div>', cls:"flat", x:0.5399, y:0.7000, w:0.2700, z:3, o:0, sh:0},
+        {id:"bp", src:"img/vf/doc-bp.webp", cls:"flat rnd", x:1.0000, y:0.1500, w:0.8000, z:2, o:0, sh:0},
+        {id:"bpl", html:'<div class="tag2"><div class="ck">Information architecture</div><div class="cv">The blueprint for every terminal application</div><p class="expl">I worked with software leads to work out each application&#39;s UI needs, then mapped every screen and path.</p></div>', cls:"flat", x:0.2000, y:0.6609, w:0.6000, z:3, o:0, sh:0},
+        {id:"d0", src:"img/vf/doc-spec.webp", cls:"flat rnd", x:0.9793, y:0.0975, w:0.2389, z:2, o:0, sh:0},
+        {id:"d0l", html:'<div class="tag2"><div class="ck">UI spec</div><div class="cv">Every element called out</div></div>', cls:"flat", x:0.9693, y:0.4275, w:0.2589, z:3, o:0, sh:0},
+        {id:"d1", src:"img/vf/doc-lay.webp", cls:"flat rnd", x:1.2600, y:0.0975, w:0.2625, z:2, o:0, sh:0},
+        {id:"d1l", html:'<div class="tag2"><div class="ck">Layout</div><div class="cv">Screens, annotated</div></div>', cls:"flat", x:1.2500, y:0.4275, w:0.2825, z:3, o:0, sh:0},
+        {id:"d2", src:"img/vf/doc-sg1.webp", cls:"flat rnd", x:0.9675, y:0.5175, w:0.2625, z:2, o:0, sh:0},
+        {id:"d2l", html:'<div class="tag2"><div class="ck">Style guide</div><div class="cv">Type</div></div>', cls:"flat", x:0.9575, y:0.8475, w:0.2825, z:3, o:0, sh:0},
+        {id:"d3", src:"img/vf/doc-sg2.webp", cls:"flat rnd", x:1.2669, y:0.5175, w:0.2487, z:2, o:0, sh:0},
+        {id:"d3l", html:'<div class="tag2"><div class="ck">Style guide</div><div class="cv">Color</div></div>', cls:"flat", x:1.2569, y:0.8475, w:0.2687, z:3, o:0, sh:0},
+        {id:"dex", html:'<div class="tag2 left"><div class="ck">Documented for development</div><div class="cv">Spec, layouts and style guide.</div><p class="expl">Iterated with software leads in Confluence and Jira, so engineering built every application from one set of rules.</p></div>', cls:"flat", x:1.5725, y:0.4000, w:0.2600, z:3, o:0, sh:0}],
+        steps:[
+         {t:"Legacy to new", hold:4000, d:"The legacy terminal UI, and a first update that brought it in line with the current Verifone brand.", set:{acp:{o:1,x:0.1901,d:0.00,mt:.9,ot:.6,soft:1}, acpl:{o:1,d:0.30,ot:.6}, aedg:{o:1,x:0.5399,d:0.20,mt:.9,ot:.6,soft:1}, aedgl:{o:1,d:0.50,ot:.6}}},
+         {t:"The inside, mapped", hold:4500, d:"I worked with software leads to determine each application's UI needs and mapped every screen into one information architecture.", set:{acp:{o:0,x:-0.7099,d:0.00,mt:1.6,ot:1,soft:1}, acpl:{o:0,x:-0.7099,d:0.00,mt:1.6,ot:1,soft:1}, aedg:{o:0,x:-0.3601,d:0.05,mt:1.6,ot:1,soft:1}, aedgl:{o:0,x:-0.3601,d:0.05,mt:1.6,ot:1,soft:1}, bp:{o:1,x:0.1000,d:.35,mt:1.6,ot:1,soft:1}, bpl:{o:1,d:1.0,ot:.7}}},
+         {t:"Documented for development", hold:5000, d:"A UI spec, annotated layouts and a style guide for type and color, iterated with software leads in Confluence and Jira.", set:{bp:{o:0,x:-0.8000,mt:1.6,ot:1,soft:1}, bpl:{o:0,x:-.7,mt:1.6,ot:1,soft:1}, d0:{o:1,x:0.0793,d:0.35,mt:1.6,ot:1,soft:1}, d0l:{o:1,x:0.0693,d:0.35,mt:1.6,ot:1,soft:1}, d1:{o:1,x:0.3600,d:0.45,mt:1.6,ot:1,soft:1}, d1l:{o:1,x:0.3500,d:0.45,mt:1.6,ot:1,soft:1}, d2:{o:1,x:0.0675,d:0.55,mt:1.6,ot:1,soft:1}, d2l:{o:1,x:0.0575,d:0.55,mt:1.6,ot:1,soft:1}, d3:{o:1,x:0.3669,d:0.65,mt:1.6,ot:1,soft:1}, d3l:{o:1,x:0.3569,d:0.65,mt:1.6,ot:1,soft:1}, dex:{o:1,x:0.6725,d:.8,mt:1.6,ot:1,soft:1}}}]}},
+      {c:"Phase 2: the design-language workshop", note:{title:"Phase 2: the design-language workshop", body:"To direct future devices, I ran the workshop that brought separate teams onto one design language: inspiration, a shared view of the users, and four driving attributes."},
+       scene:{auto:1, rowAt:3, layers:[
+        {id:"bg", html:'<div class="jb-bg"></div>', cls:"flat", x:0, y:0, w:1, z:0, o:1, sh:0},
+        {id:"ih", html:'<div class="tag2"><div class="ck">Inspiration</div><div class="cv">Looking outside the payments world</div></div>', cls:"flat", x:0.2500, y:0.1800, w:0.5000, z:3, o:0, sh:0},
+        {id:"ib", src:"img/vf/insp.webp", cls:"flat rnd", x:0.1100, y:0.3000, w:0.8600, z:2, o:0, sh:0},
+        {id:"il0", html:'<div class="tag2"><div class="cv">Engaging interaction</div></div>', cls:"flat", x:0.1061, y:0.5777, w:0.2000, z:3, o:0, sh:0},
+        {id:"il1", html:'<div class="tag2"><div class="cv">Helpful innovation</div></div>', cls:"flat", x:0.3399, y:0.5777, w:0.2000, z:3, o:0, sh:0},
+        {id:"il2", html:'<div class="tag2"><div class="cv">Simple interaction</div></div>', cls:"flat", x:0.5407, y:0.5777, w:0.2000, z:3, o:0, sh:0},
+        {id:"il3", html:'<div class="tag2"><div class="cv">Elegant simplicity</div></div>', cls:"flat", x:0.7371, y:0.5777, w:0.2000, z:3, o:0, sh:0},
+        {id:"us", src:"img/vf/users.png", cls:"flat", x:1.0007, y:0.1900, w:0.4686, z:2, o:0, sh:0},
+        {id:"ut", html:'<div class="tag2 left"><div class="ck">Users</div><div class="cv">Two sides of every transaction.</div><p class="expl">Merchants, and the device managers, app developers, tech support and banks behind them, on one side. Customers of every age, eyesight and environment on the other.</p></div>', cls:"flat", x:1.5293, y:0.3300, w:0.2700, z:3, o:0, sh:0},
+        {id:"wl", src:"img/vf/wall.webp", cls:"flat rnd", x:0.9500, y:0.2870, w:0.5900, z:2, o:0, sh:0},
+        {id:"wt", html:'<div class="tag2 left"><div class="ck">The workshop</div><div class="cv">One language, agreed together.</div><p class="expl">As one of Verifone&#39;s first designers, I ran the design-language workshop. Work from every team went up on the wall and was sorted until a direction held.</p></div>', cls:"flat", x:1.5900, y:0.3170, w:0.2600, z:3, o:0, sh:0},
+        {id:"ah", html:'<div class="tag2"><div class="ck">Driving design attributes</div><div class="cv">Four ideas every screen had to meet</div></div>', cls:"flat", x:0.2500, y:0.3500, w:0.5000, z:3, o:0, sh:0},
+        {id:"at0", html:'<div class="attr" style="--c:#6aa84f"><b>Utility</b><span>Serves the user&#39;s needs and adds value through its function.</span></div>', cls:"flat", x:0.1450, y:0.4900, w:0.1800, z:3, o:0, sh:0},
+        {id:"at1", html:'<div class="attr" style="--c:#3d9be9"><b>Clarity</b><span>Clear and intuitive, so it&#39;s easy to understand.</span></div>', cls:"flat", x:0.3550, y:0.4900, w:0.1800, z:3, o:0, sh:0},
+        {id:"at2", html:'<div class="attr" style="--c:#f0a04b"><b>Delight</b><span>An enjoyable experience in its environment.</span></div>', cls:"flat", x:0.5650, y:0.4900, w:0.1800, z:3, o:0, sh:0},
+        {id:"at3", html:'<div class="attr" style="--c:#111110"><b>Confidence</b><span>Secure, trustworthy interactions.</span></div>', cls:"flat", x:0.7750, y:0.4900, w:0.1800, z:3, o:0, sh:0}],
+        steps:[
+         {t:"Inspiration", hold:4500, d:"Looking outside the payments industry for engaging interaction, helpful innovation, simplicity and elegance.", set:{il0:{o:1,d:0.50,ot:.6}, il1:{o:1,d:0.60,ot:.6}, il2:{o:1,d:0.70,ot:.6}, il3:{o:1,d:0.80,ot:.6}, ih:{o:1,ot:.6}, ib:{o:1,x:0.0700,d:.15,mt:.9,ot:.6,soft:1}}},
+         {t:"Who it served", hold:5000, d:"Merchants and the people behind them, and customers of every age, eyesight and environment.", set:{il0:{o:0,x:-0.7939,mt:1.6,ot:1,soft:1}, il1:{o:0,x:-0.5601,mt:1.6,ot:1,soft:1}, il2:{o:0,x:-0.3593,mt:1.6,ot:1,soft:1}, il3:{o:0,x:-0.1629,mt:1.6,ot:1,soft:1}, ih:{o:0,x:-.65,mt:1.6,ot:1,soft:1}, ib:{o:0,x:-0.8300,mt:1.6,ot:1,soft:1}, us:{o:1,x:0.1007,d:.35,mt:1.6,ot:1,soft:1}, ut:{o:1,x:0.6293,d:.5,mt:1.6,ot:1,soft:1}}},
+         {t:"Everyone's work on one wall", hold:5000, d:"Work from every team on the wall, sorted and argued over until a direction held.", set:{us:{o:0,x:-0.7993,mt:1.6,ot:1,soft:1}, ut:{o:0,x:-0.2707,mt:1.6,ot:1,soft:1}, wl:{o:1,x:0.0500,d:.35,mt:1.6,ot:1,soft:1}, wt:{o:1,x:0.6900,d:.5,mt:1.6,ot:1,soft:1}}},
+         {t:"Four attributes", hold:6000, d:"Utility, clarity, delight and confidence: the attributes that would direct future devices.", set:{wl:{o:0,x:-0.8500,mt:1.6,ot:1,soft:1}, wt:{o:0,x:-0.2100,mt:1.6,ot:1,soft:1}, ah:{o:1,d:.6,ot:.7}, at0:{o:1,x:0.0950,d:0.75,mt:.9,ot:.6,soft:1}, at1:{o:1,x:0.3050,d:0.90,mt:.9,ot:.6,soft:1}, at2:{o:1,x:0.5150,d:1.05,mt:.9,ot:.6,soft:1}, at3:{o:1,x:0.7250,d:1.20,mt:.9,ot:.6,soft:1}}}]}},
+      {c:"The system in use", note:{title:"The system in use", body:"The language in motion and sound, then on every Verifone device: handheld, countertop and docked charging."},
+       scene:{auto:1, rowAt:1, layers:[
+        {id:"bg", html:'<div class="jb-bg"></div>', cls:"flat", x:0, y:0, w:1, z:0, o:1, sh:0},
+        {id:"sc", src:"img/vf/remove-card.webp", vid:"img/vf/remove-card.mp4", cls:"nat rnd", x:0.1000, y:0.2212, w:0.5600, z:2, o:0, sh:.4},
+        {id:"scl", html:'<div class="tag2 left"><div class="ck">Sound and motion</div><div class="cv">The remove-card moment.</div><p class="expl">When a payment is approved, the card icon lifts out of the slot and the sound I designed tells the customer to take their card, so they don&#39;t have to read the screen.</p><div class="snd"><button type="button" data-unmute="1"><i aria-hidden="true"></i>Play with sound</button></div></div>', cls:"flat", x:0.7000, y:0.2712, w:0.2700, z:3, o:0, sh:0},
+        {id:"dhand", src:"img/vf/hand.webp", cls:"flat", x:0.9292, y:0.2000, w:0.1026, z:2, o:0, sh:0},
+        {id:"dhandl", html:'<div class="tag2"><div class="ck">Handheld</div><div class="cv">Physical keys and a touchscreen</div></div>', cls:"flat", x:0.9092, y:0.6000, w:0.1426, z:3, o:0, sh:0},
+        {id:"dstand", src:"img/vf/stand.webp", cls:"flat", x:1.0768, y:0.2000, w:0.2283, z:2, o:0, sh:0},
+        {id:"dstandl", html:'<div class="tag2"><div class="ck">Countertop</div><div class="cv">Customer-facing display</div></div>', cls:"flat", x:1.0568, y:0.6000, w:0.2683, z:3, o:0, sh:0},
+        {id:"dchg", src:"img/vf/chg.webp", cls:"flat", x:1.3501, y:0.2000, w:0.5206, z:2, o:0, sh:0},
+        {id:"dchgl", html:'<div class="tag2"><div class="ck">Docked charging</div><div class="cv">The same type and color</div></div>', cls:"flat", x:1.3301, y:0.6000, w:0.5606, z:3, o:0, sh:0}],
+        steps:[
+         {t:"Sound and motion", hold:8000, d:"Approved, then the card icon lifts out of the slot as the remove-card sound plays. Press Play with sound to hear it.", set:{sc:{o:1,x:0.0600,d:0.00,mt:.9,ot:.6,soft:1}, scl:{o:1,x:0.6700,d:0.30,mt:.9,ot:.6,soft:1}}},
+         {t:"On every device", hold:4500, d:"The same system on handheld, countertop and docked-charging screens.", set:{sc:{o:0,x:-0.8708,d:0.00,mt:1.6,ot:1,soft:1}, scl:{o:0,x:-0.7000,d:0.00,mt:1.6,ot:1,soft:1}, dhand:{o:1,x:0.0292,d:0.35,mt:1.6,ot:1,soft:1}, dhandl:{o:1,x:0.0092,d:0.35,mt:1.6,ot:1,soft:1}, dstand:{o:1,x:0.1768,d:0.47,mt:1.6,ot:1,soft:1}, dstandl:{o:1,x:0.1568,d:0.47,mt:1.6,ot:1,soft:1}, dchg:{o:1,x:0.4501,d:0.59,mt:1.6,ot:1,soft:1}, dchgl:{o:1,x:0.4301,d:0.59,mt:1.6,ot:1,soft:1}}}]}},
+      {c:"Where the language went", note:{title:"Where the language went", body:"The language carried into utility screens, a shared icon set, and screens merchants like Whole Foods could brand."},
+       scene:{auto:1, rowAt:1, layers:[
+        {id:"bg", html:'<div class="jb-bg"></div>', cls:"flat", x:0, y:0, w:1, z:0, o:1, sh:0},
+        {id:"wutil", src:"img/vf/util.webp", cls:"flat", x:0.1466, y:0.2000, w:0.3022, z:2, o:0, sh:0},
+        {id:"wutill", html:'<div class="tag2"><div class="ck">Utility screens</div><div class="cv">Verifone tools over any app</div></div>', cls:"flat", x:0.0866, y:0.6000, w:0.3422, z:3, o:0, sh:0},
+        {id:"wvfw", src:"img/vf/vfw.webp", cls:"flat", x:0.5088, y:0.2000, w:0.1504, z:2, o:0, sh:0},
+        {id:"wvfwl", html:'<div class="tag2"><div class="ck">Merchant-ready</div><div class="cv">A neutral layout merchants could brand</div></div>', cls:"flat", x:0.4488, y:0.6000, w:0.1904, z:3, o:0, sh:0},
+        {id:"wicons", src:"img/vf/icons.webp", cls:"flat", x:0.7191, y:0.2000, w:0.2143, z:2, o:0, sh:0},
+        {id:"wiconsl", html:'<div class="tag2"><div class="ck">Icon set</div><div class="cv">One line weight, every function</div></div>', cls:"flat", x:0.6591, y:0.6000, w:0.2543, z:3, o:0, sh:0},
+        {id:"bu", src:"img/vf/util.webp", cls:"flat", x:1.0342, y:0.1950, w:0.3358, z:2, o:0, sh:0},
+        {id:"bb", src:"img/vf/branded.webp", cls:"flat", x:1.4300, y:0.1950, w:0.3358, z:2, o:0, sh:0},
+        {id:"bul", html:'<div class="tag2"><div class="ck">Utility</div><div class="cv">The Verifone default</div></div>', cls:"flat", x:1.0342, y:0.6300, w:0.3358, z:3, o:0, sh:0},
+        {id:"bbl", html:'<div class="tag2"><div class="ck">Branded</div><div class="cv">The same screens for Whole Foods</div></div>', cls:"flat", x:1.4300, y:0.6300, w:0.3358, z:3, o:0, sh:0},
+        {id:"bex", html:'<div class="tag2"><div class="ck">One system</div><div class="cv">Merchants change the look; the structure stays.</div></div>', cls:"flat", x:.25, y:0.7450, w:.5, z:3, o:0, sh:0}],
+        steps:[
+         {t:"Built to extend", hold:5000, d:"Utility screens, layouts merchants could brand with their own look, and one icon set for every function.", set:{wutil:{o:1,x:0.1066,d:0.00,mt:.9,ot:.6,soft:1}, wutill:{o:1,d:0.25,mt:.9,ot:.6,soft:1}, wvfw:{o:1,x:0.4688,d:0.15,mt:.9,ot:.6,soft:1}, wvfwl:{o:1,d:0.40,mt:.9,ot:.6,soft:1}, wicons:{o:1,x:0.6791,d:0.30,mt:.9,ot:.6,soft:1}, wiconsl:{o:1,d:0.55,mt:.9,ot:.6,soft:1}}},
+         {t:"Branded for merchants", hold:5500, d:"The same structure carried a merchant's brand: Whole Foods screens built on the Verifone system.", set:{wutil:{o:0,x:-.6,mt:1.6,ot:1,soft:1}, wutill:{o:0,x:-.6,mt:1.6,ot:1,soft:1}, wvfw:{o:0,x:-.6,mt:1.6,ot:1,soft:1}, wvfwl:{o:0,x:-.6,mt:1.6,ot:1,soft:1}, wicons:{o:0,x:-.6,mt:1.6,ot:1,soft:1}, wiconsl:{o:0,x:-.6,mt:1.6,ot:1,soft:1}, bu:{o:1,x:0.1342,d:.35,mt:1.6,ot:1,soft:1}, bb:{o:1,x:0.5300,d:.5,mt:1.6,ot:1,soft:1}, bul:{o:1,x:0.1342,d:.35,mt:1.6,ot:1,soft:1}, bbl:{o:1,x:0.5300,d:.5,mt:1.6,ot:1,soft:1}, bex:{o:1,d:1.1,ot:.7}}}]}}]}),
+
+  pick("greatcall", {n:"Jitterbug Touch", tour:1, tag:"GreatCall · 2011–13", role:"First designer, via Craftlab",
+    out:"The core of the interface I designed in 2012 still ships today.",
+    why:"GreatCall wanted a smartphone for older first-time owners, and had no designer.",
+    led:"Interviewed seniors myself and tested designs in those sessions. Made the work that won senior-management approval, then specified it in a 50-page spec through release.",
+    res:"Jitterbug Touch launched in October 2012, followed by Touch 2 and Touch3. GreatCall patents name me.",
+    use:[
+      {c:"Jitterbug Touch, 2012 to today", note:{title:"Jitterbug Touch, 2012 to today", body:"I designed the first two generations of GreatCall's Jitterbug Touch, a smartphone for older first-time owners. The phone Lively sells today still follows that design."},
+       scene:{auto:1, layers:[
+        {id:"bg", html:'<div class="jb-bg"></div>', cls:"flat", x:0, y:0, w:1, z:0, o:1, sh:0},
+        {id:"p1", src:"img/jb/jt1.webp", cls:"flat", x:.135, y:.3536, w:.2204, z:2, o:1, sh:0},
+        {id:"p2", src:"img/jb/jt2.webp", cls:"flat", x:.3892, y:.2659, w:.2204, z:2, o:1, sh:0},
+        {id:"p3", src:"img/jb/lively-phone.webp", cls:"flat", x:.6433, y:.091, w:.2219, z:2, o:1, sh:0},
+        {id:"g", src:"img/jb/logo-greatcall.webp", cls:"flat", x:.2187, y:.3153, w:.053, z:3, o:1, sh:0},
+        {id:"v", src:"img/jb/logo-lively.webp", cls:"flat", x:.7326, y:.0555, w:.0435, z:3, o:1, sh:0},
+        {id:"l1", html:'<div class="tag2"><div class="ck">Jitterbug Touch</div><div class="cv">GreatCall · 2012</div></div>', cls:"flat thumbhide", x:.135, y:.895, w:.2204, z:3, o:1, sh:0},
+        {id:"l2", html:'<div class="tag2"><div class="ck">Jitterbug Touch 2</div><div class="cv">GreatCall · 2013</div></div>', cls:"flat thumbhide", x:.3892, y:.895, w:.2204, z:3, o:1, sh:0},
+        {id:"l3", html:'<div class="tag2"><div class="ck">Jitterbug smartphone</div><div class="cv">Lively · today</div></div>', cls:"flat thumbhide", x:.6433, y:.895, w:.2219, z:3, o:1, sh:0}],
+        steps:[
+         {t:"Jitterbug Touch, 2012", hold:2600, d:"GreatCall's first smartphone, for people moving up from a basic phone: Apps and People, and a short list of big, labeled choices.", set:{p1:{o:1,s:1,mt:.9,ot:.7,soft:1}, l1:{o:1,s:1,mt:.9,ot:.7,soft:1}, p2:{o:.16,s:.97,mt:.9,ot:.7,soft:1}, l2:{o:.16,s:.97,mt:.9,ot:.7,soft:1}, p3:{o:.16,s:.97,mt:.9,ot:.7,soft:1}, l3:{o:.16,s:.97,mt:.9,ot:.7,soft:1}, g:{o:1,s:1,mt:.9,ot:.7,soft:1}, v:{o:.16,s:.97,mt:.9,ot:.7,soft:1}}},
+         {t:"Jitterbug Touch 2, 2013", hold:2600, d:"Refined from what we learned on the first: one list, bigger lettering, and plain words like Voicemail in place of icons.", set:{p1:{o:.16,s:.97,mt:.9,ot:.7,soft:1}, l1:{o:.16,s:.97,mt:.9,ot:.7,soft:1}, p2:{o:1,s:1,mt:.9,ot:.7,soft:1}, l2:{o:1,s:1,mt:.9,ot:.7,soft:1}, p3:{o:.16,s:.97,mt:.9,ot:.7,soft:1}, l3:{o:.16,s:.97,mt:.9,ot:.7,soft:1}, g:{o:1,s:1,mt:.9,ot:.7,soft:1}, v:{o:.16,s:.97,mt:.9,ot:.7,soft:1}}},
+         {t:"Lively, today", hold:2600, d:"GreatCall is now Lively. Its current Jitterbug smartphone still opens to a single list of large, labeled choices.", set:{p1:{o:.16,s:.97,mt:.9,ot:.7,soft:1}, l1:{o:.16,s:.97,mt:.9,ot:.7,soft:1}, p2:{o:.16,s:.97,mt:.9,ot:.7,soft:1}, l2:{o:.16,s:.97,mt:.9,ot:.7,soft:1}, p3:{o:1,s:1,mt:.9,ot:.7,soft:1}, l3:{o:1,s:1,mt:.9,ot:.7,soft:1}, g:{o:.16,s:.97,mt:.9,ot:.7,soft:1}, v:{o:1,s:1,mt:.9,ot:.7,soft:1}}},
+         {t:"Three generations, one idea", hold:4000, d:"The structure designed in 2012 is still how the phone works today.", set:{p1:{o:1,s:1,mt:.9,ot:.7,soft:1}, l1:{o:1,s:1,mt:.9,ot:.7,soft:1}, p2:{o:1,s:1,mt:.9,ot:.7,soft:1}, l2:{o:1,s:1,mt:.9,ot:.7,soft:1}, p3:{o:1,s:1,mt:.9,ot:.7,soft:1}, l3:{o:1,s:1,mt:.9,ot:.7,soft:1}, g:{o:1,s:1,mt:.9,ot:.7,soft:1}, v:{o:1,s:1,mt:.9,ot:.7,soft:1}}}]}},
+
+      {c:"Listening first", note:{title:"Listening first", body:"GreatCall wanted a smartphone for older first-time owners and had no designer. Working with product planning, I started with the people it was for: more than 25 usability sessions from May to June 2011."},
+       scene:{auto:1, rowAt:1, layers:[
+        {id:"bg", html:'<div class="jb-bg"></div>', cls:"flat", x:0, y:0, w:1, z:0, o:1, sh:0},
+        {id:"r1", src:"img/jb/r1.webp", cls:"flat", x:0.2375, y:0.1835, w:.1556, z:2, o:0, s:.9, sh:0},
+        {id:"r2", src:"img/jb/r2.webp", cls:"flat", x:0.4222, y:0.1835, w:.1556, z:2, o:0, s:.9, sh:0},
+        {id:"r3", src:"img/jb/r3.webp", cls:"flat", x:0.6069, y:0.1835, w:.1556, z:2, o:0, s:.9, sh:0},
+        {id:"r4", src:"img/jb/r4.webp", cls:"flat", x:0.7916, y:0.4035, w:.1556, z:2, o:0, s:.9, sh:0},
+        {id:"r5", src:"img/jb/r5.webp", cls:"flat", x:0.6069, y:0.6235, w:.1556, z:2, o:0, s:.9, sh:0},
+        {id:"r6", src:"img/jb/r6.webp", cls:"flat", x:0.4222, y:0.6235, w:.1556, z:2, o:0, s:.9, sh:0},
+        {id:"r7", src:"img/jb/r7.webp", cls:"flat", x:0.2375, y:0.6235, w:.1556, z:2, o:0, s:.9, sh:0},
+        {id:"r8", src:"img/jb/r8.webp", cls:"flat", x:0.0528, y:0.4035, w:.1556, z:2, o:0, s:.9, sh:0},
+        {id:"tx", html:'<div class="tag2"><div class="ck">User research</div><div class="cv">25+ usability sessions with seniors, May to June 2011.</div><p class="expl">GreatCall&#39;s only designer, I ran every session myself.</p></div>', cls:"flat", x:.3, y:.455, w:.4, z:3, o:0, sh:0}],
+        steps:[
+         {t:"25+ usability sessions", hold:5500, d:"Each round of feedback shaped the next design, and the findings went straight to GreatCall's senior management.", set:{r1:{o:1,s:1,d:0.00,mt:.9,ot:.7,soft:1}, r2:{o:1,s:1,d:0.09,mt:.9,ot:.7,soft:1}, r3:{o:1,s:1,d:0.18,mt:.9,ot:.7,soft:1}, r4:{o:1,s:1,d:0.27,mt:.9,ot:.7,soft:1}, r5:{o:1,s:1,d:0.36,mt:.9,ot:.7,soft:1}, r6:{o:1,s:1,d:0.45,mt:.9,ot:.7,soft:1}, r7:{o:1,s:1,d:0.54,mt:.9,ot:.7,soft:1}, r8:{o:1,s:1,d:0.63,mt:.9,ot:.7,soft:1}, tx:{o:1,y:.435,d:.8,mt:1,ot:.8,soft:1}}}]}},
+
+      {c:"Round after round", note:{title:"Round after round", body:"Designs went back to seniors round after round. Then I made the case to GreatCall's executives, and the approved design shipped."},
+       scene:{auto:1, rowAt:3, layers:[
+        {id:"bg", html:'<div class="jb-bg"></div>', cls:"flat", x:0, y:0, w:1, z:0, o:1, sh:0},
+        {id:"i1", src:"img/jb/it1.webp", cls:"flat", x:0.07000, y:.335, w:.0682, z:2, o:0, sh:0},
+        {id:"i2", src:"img/jb/it2.webp", cls:"flat", x:0.16897, y:.335, w:.0682, z:2, o:0, sh:0},
+        {id:"i3", src:"img/jb/it3.webp", cls:"flat", x:0.26795, y:.335, w:.0682, z:2, o:0, sh:0},
+        {id:"i4", src:"img/jb/it4.webp", cls:"flat", x:0.36693, y:.335, w:.0682, z:2, o:0, sh:0},
+        {id:"i5", src:"img/jb/it5.webp", cls:"flat", x:0.46590, y:.335, w:.0682, z:2, o:0, sh:0},
+        {id:"i6", src:"img/jb/it6.webp", cls:"flat", x:0.56488, y:.335, w:.0682, z:2, o:0, sh:0},
+        {id:"i7", src:"img/jb/it7.webp", cls:"flat", x:0.66385, y:.335, w:.0682, z:2, o:0, sh:0},
+        {id:"i8", src:"img/jb/it8.webp", cls:"flat", x:0.76282, y:.335, w:.0682, z:2, o:0, sh:0},
+        {id:"i9", src:"img/jb/it9.webp", cls:"flat", x:0.86180, y:.335, w:.0682, z:2, o:0, sh:0},
+        {id:"sl", html:'<div class="tag2"><div class="ck">Iteration</div><div class="cv">Round after round, tested with seniors between each.</div></div>', cls:"flat", x:.25, y:.62, w:.5, z:3, o:0, sh:0},
+        {id:"pa", src:"img/jb/pitch-3.webp", x:.105, y:0.330, w:0.29, z:3, o:0, sh:.35},
+        {id:"pb", src:"img/jb/pitch-24.webp", x:.425, y:0.330, w:0.29, z:3, o:0, sh:.35},
+        {id:"pal", html:'<div class="tag2"><div class="ck">The evidence</div><div class="cv">25+ usability tests, May to June</div></div>', cls:"flat", x:.105, y:0.620, w:0.29, z:3, o:0, sh:0},
+        {id:"pbl", html:'<div class="tag2"><div class="ck">The ask</div><div class="cv">What was required for launch</div></div>', cls:"flat", x:.425, y:0.620, w:0.29, z:3, o:0, sh:0},
+        {id:"tp", html:'<div class="tag2 left"><div class="ck">The pitch · July 2011</div><div class="cv">A plan executives could approve.</div><p class="expl">I took the research, the design and a launch plan to GreatCall&#39;s executive team: what users needed, what was required for launch, and how to build it. They approved it, and the phone launched in October 2012.</p></div>', cls:"flat", x:.735, y:.31, w:.24, z:8, o:0, sh:0},
+        {id:"fl", src:"img/jb/final-lock.webp", cls:"flat", x:.0851, y:.2, w:.2474, z:3, o:0, sh:0},
+        {id:"fh", src:"img/jb/final-home.webp", cls:"flat", x:.3725, y:.209, w:.2424, z:3, o:0, sh:0},
+        {id:"fll", html:'<div class="tag2"><div class="ck">Lock screen</div><div class="cv">Time, weather, usage and 5Star help</div></div>', cls:"flat", x:.0851, y:.80, w:.2474, z:3, o:0, sh:0},
+        {id:"fhl", html:'<div class="tag2"><div class="ck">Home</div><div class="cv">Apps and People, a short list</div></div>', cls:"flat", x:.3725, y:.80, w:.2424, z:3, o:0, sh:0},
+        {id:"ft", html:'<div class="tag2 left"><div class="ck">The design</div><div class="cv">Two screens that made the phone simple.</div><p class="expl">The home screen became two tabs, Apps and People, each a short list of big, labeled choices. The lock screen kept what people asked for in view, with 5Star help one tap away.</p></div>', cls:"flat", x:.69, y:.32, w:.25, z:3, o:0, sh:0}],
+        steps:[
+         {t:"Iteration", hold:3800, d:"Wireframes, color studies and big-tile experiments, each tested with seniors before the next round.", set:{i1:{o:1,y:.305,d:0.00,mt:.8,ot:.6,soft:1}, i2:{o:1,y:.305,d:0.08,mt:.8,ot:.6,soft:1}, i3:{o:1,y:.305,d:0.16,mt:.8,ot:.6,soft:1}, i4:{o:1,y:.305,d:0.24,mt:.8,ot:.6,soft:1}, i5:{o:1,y:.305,d:0.32,mt:.8,ot:.6,soft:1}, i6:{o:1,y:.305,d:0.40,mt:.8,ot:.6,soft:1}, i7:{o:1,y:.305,d:0.48,mt:.8,ot:.6,soft:1}, i8:{o:1,y:.305,d:0.56,mt:.8,ot:.6,soft:1}, i9:{o:1,y:.305,d:0.64,mt:.8,ot:.6,soft:1}, sl:{o:1,d:.8,ot:.6}}},
+         {t:"The pitch", hold:6000, d:"A deck for GreatCall's executives: 25+ usability tests, the concept, what was required for launch, and a development plan. It was approved.", set:{i1:{o:0,y:.345,d:0.00,mt:1.1,ot:.8,soft:1}, i2:{o:0,y:.345,d:0.04,mt:1.1,ot:.8,soft:1}, i3:{o:0,y:.345,d:0.08,mt:1.1,ot:.8,soft:1}, i4:{o:0,y:.345,d:0.12,mt:1.1,ot:.8,soft:1}, i5:{o:0,y:.345,d:0.16,mt:1.1,ot:.8,soft:1}, i6:{o:0,y:.345,d:0.20,mt:1.1,ot:.8,soft:1}, i7:{o:0,y:.345,d:0.24,mt:1.1,ot:.8,soft:1}, i8:{o:0,y:.345,d:0.28,mt:1.1,ot:.8,soft:1}, i9:{o:0,y:.345,d:0.32,mt:1.1,ot:.8,soft:1}, sl:{o:0,ot:.5}, pa:{o:1,x:.055,d:.5,mt:1,ot:.7,soft:1}, pb:{o:1,x:.375,d:.65,mt:1,ot:.7,soft:1}, pal:{o:1,x:.055,d:.7,mt:1,ot:.7,soft:1}, pbl:{o:1,x:.375,d:.85,mt:1,ot:.7,soft:1}, tp:{o:1,x:.705,d:1.0,mt:1,ot:.7,soft:1}}},
+         {t:"Two screens that made it simple", hold:6500, d:"The home screen became two tabs, Apps and People, each a short list of big, labeled choices. The lock screen kept time, weather, usage and 5Star help in view.", set:{pa:{o:0,x:-.8,mt:1.6,ot:1,soft:1}, pb:{o:0,x:-.5,mt:1.6,ot:1,soft:1,d:.05}, pal:{o:0,x:-.8,mt:1.6,ot:1,soft:1}, pbl:{o:0,x:-.5,mt:1.6,ot:1,soft:1,d:.05}, tp:{o:0,x:-.3,mt:1.6,ot:1,soft:1}, fl:{o:1,y:.17,d:.55,mt:1.6,ot:1,soft:1}, fh:{o:1,y:.179,d:.7,mt:1.6,ot:1,soft:1}, fll:{o:1,d:1.2,ot:.7}, fhl:{o:1,d:1.3,ot:.7}, ft:{o:1,x:.6649,d:1.0,mt:1.6,ot:1,soft:1}}}]}},
+      {c:"Specified for release", note:{title:"Specified for release", body:"A 50-page home and lock screen spec for engineering, kept current through release with a dated change log. The interface it described is patented."},
+       scene:{auto:1, rowAt:3, layers:[
+        {id:"bg", html:'<div class="jb-bg"></div>', cls:"flat", x:0, y:0, w:1, z:0, o:1, sh:0},
+        {id:"c7", src:"img/jb/spec-p7.webp", x:0.140, y:0.215, w:0.34, z:2, o:0, sh:.35},
+        {id:"c6", src:"img/jb/spec-p6.webp", x:0.170, y:0.250, w:0.34, z:3, o:0, sh:.35},
+        {id:"c5", src:"img/jb/spec-p5.webp", x:0.200, y:0.285, w:0.34, z:4, o:0, sh:.35},
+        {id:"c4", src:"img/jb/spec-p4.webp", x:0.230, y:0.320, w:0.34, z:5, o:0, sh:.35},
+        {id:"t1", html:'<div class="tag2 left"><div class="ck">Change log</div><div class="cv">94 revisions, May to September 2012.</div><p class="expl">I kept the spec current through release. Every change was dated and tied to the page it touched, so engineering always built from the latest design.</p></div>', cls:"flat", x:.63, y:.33, w:.3, z:6, o:0, sh:0},
+        {id:"s22", src:"img/jb/spec-p22.webp", x:1.1, y:.2, w:0.38, z:3, o:0, sh:.35},
+        {id:"s23", src:"img/jb/spec-p23.webp", x:1.5, y:.2, w:0.38, z:3, o:0, sh:.35},
+        {id:"l22", html:'<div class="tag2"><div class="ck">Layout</div><div class="cv">Home screen, Apps tab</div></div>', cls:"flat", x:1.1, y:.70, w:0.38, z:3, o:0, sh:0},
+        {id:"l23", html:'<div class="tag2"><div class="ck">Interaction</div><div class="cv">What every tap does</div></div>', cls:"flat", x:1.5, y:.70, w:0.38, z:3, o:0, sh:0},
+        {id:"ph", src:"img/jb/jt1.webp", cls:"flat", x:1.1, y:.19, w:.2, z:3, o:0, sh:0},
+        {id:"l22b", html:'<div class="tag2"><div class="ck">Specified</div><div class="cv">September 2012</div></div>', cls:"flat", x:.15, y:.70, w:.42, z:3, o:0, sh:0},
+        {id:"lph", html:'<div class="tag2"><div class="ck">Shipped</div><div class="cv">October 2012</div></div>', cls:"flat", x:1.1, y:.70, w:.2, z:3, o:0, sh:0},
+        {id:"ic0", src:"img/jb/icon-5star.png", cls:"flat icn", x:0.3250, y:.16, w:0.07, z:3, o:0, s:.9, sh:0},
+        {id:"icl0", html:'<div class="tag2"><div class="ck">5Star</div><div class="cv">Urgent response</div></div>', cls:"flat", x:0.2850, y:.285, w:0.150, z:3, o:0, sh:0},
+        {id:"ic1", src:"img/jb/icon-link.png", cls:"flat icn", x:0.4650, y:.16, w:0.07, z:3, o:0, s:.9, sh:0},
+        {id:"icl1", html:'<div class="tag2"><div class="ck">Link</div><div class="cv">For family</div></div>', cls:"flat", x:0.4250, y:.285, w:0.150, z:3, o:0, sh:0},
+        {id:"ic2", src:"img/jb/icon-nurse.png", cls:"flat icn", x:0.6050, y:.16, w:0.07, z:3, o:0, s:.9, sh:0},
+        {id:"icl2", html:'<div class="tag2"><div class="ck">Live Nurse</div><div class="cv">Nurse line</div></div>', cls:"flat", x:0.5650, y:.285, w:0.150, z:3, o:0, sh:0},
+        {id:"pt", html:'<div class="pat"><div class="ck">Patents</div><div class="cv pt">GreatCall patents naming me as an inventor</div><ul><li><b>US 8,862,106</b><span>Intelligent call forwarding</span><i>2014</i></li><li><b>US 9,300,806</b><span>Intelligent call forwarding</span><i>2016</i></li><li><b>US 9,659,261</b><span>User interface for portable device</span><i>2017</i></li><li><b>US D763,880</b><span>Display screen graphical user interface</span><i>2016</i></li><li><b>US D764,518</b><span>Display screen graphical user interface</span><i>2016</i></li></ul><p class="expl">With Dean Williams and Kotaro Matsuo.</p></div>', cls:"flat", x:.25, y:.43, w:.5, z:3, o:0, sh:0}],
+        steps:[
+         {t:"A living spec", hold:4500, d:"94 logged revisions between May 21 and September 21, 2012, each tied to the page it changed.", set:{c7:{o:1,x:0.100,d:0.00,mt:.9,ot:.6,soft:1}, c6:{o:1,x:0.130,d:0.12,mt:.9,ot:.6,soft:1}, c5:{o:1,x:0.160,d:0.24,mt:.9,ot:.6,soft:1}, c4:{o:1,x:0.190,d:0.36,mt:.9,ot:.6,soft:1}, t1:{o:1,x:.60,d:.5,mt:.9,ot:.6,soft:1}}},
+         {t:"Every screen, annotated", hold:4500, d:"Layouts called out element by element, with a separate page for what each tap and drag does.", set:{c7:{o:0,x:-0.800,d:0.00,mt:1.6,ot:1,soft:1}, c6:{o:0,x:-0.770,d:0.05,mt:1.6,ot:1,soft:1}, c5:{o:0,x:-0.740,d:0.10,mt:1.6,ot:1,soft:1}, c4:{o:0,x:-0.710,d:0.15,mt:1.6,ot:1,soft:1}, t1:{o:0,x:-.3,mt:1.6,ot:1,soft:1}, s22:{o:1,x:.10,d:.4,mt:1.6,ot:1,soft:1}, s23:{o:1,x:.52,d:.55,mt:1.6,ot:1,soft:1}, l22:{o:1,x:.10,d:.4,mt:1.6,ot:1,soft:1}, l23:{o:1,x:.52,d:.55,mt:1.6,ot:1,soft:1}}},
+         {t:"Shipped as specified", hold:5500, d:"The Apps tab in the September spec, and on the phone that launched that October.", set:{s23:{o:0,x:-.4,mt:1.6,ot:1,soft:1}, l23:{o:0,x:-.4,mt:1.6,ot:1,soft:1}, s22:{x:.15,y:.165,w:0.42,mt:1.6,ot:1,soft:1,d:.15}, l22:{o:0,x:.15,w:.42,mt:1.6,ot:.4,soft:1}, l22b:{o:1,d:.9,ot:.7}, ph:{o:1,x:.65,mt:1.6,ot:1,soft:1,d:.45}, lph:{o:1,x:.65,mt:1.6,ot:1,soft:1,d:.45}}},
+         {t:"Patented, and the service around it", hold:7000, d:"I also designed apps for the service around the phone: the 5Star urgent-response app, the early family app that became Link, and Live Nurse. GreatCall patents for the phone's interface and call forwarding name me as an inventor.", set:{s22:{o:0,x:-.6,mt:1.6,ot:1,soft:1}, l22b:{o:0,x:-.6,mt:1.6,ot:1,soft:1}, ph:{o:0,x:-.3,mt:1.6,ot:1,soft:1,d:.05}, lph:{o:0,x:-.3,mt:1.6,ot:1,soft:1,d:.05}, pt:{o:1,y:.40,d:.9,mt:1.6,ot:1,soft:1}, ic0:{o:1,s:1,y:.13,d:0.50,mt:.9,ot:.6,soft:1}, icl0:{o:1,y:.255,d:0.62,mt:.9,ot:.6,soft:1}, ic1:{o:1,s:1,y:.13,d:0.62,mt:.9,ot:.6,soft:1}, icl1:{o:1,y:.255,d:0.74,mt:.9,ot:.6,soft:1}, ic2:{o:1,s:1,y:.13,d:0.74,mt:.9,ot:.6,soft:1}, icl2:{o:1,y:.255,d:0.86,mt:.9,ot:.6,soft:1}}}]}}]}),
+
+  pick("sony", {n:"Bravia Favorites", tag:"Sony · 2007", role:"Lead designer, overseeing two designers; then design program manager",
+    out:"A hardware limit became the idea. Shipped in Bravia; adopted for Japan.",
+    why:"A new chipset, a VP asking for a paradigm shift, and design concepts that kept getting rejected.",
+    led:"Pitched an ambient-TV concept that senior management approved. The chipset could show live TV in only a quarter of the screen, so I designed the Favorites menu around that limit.",
+    res:"Shipped in the 2007 Bravia line and adopted for Japan. The team received the Sony Presidential Award: the TVOA President's Special Recognition, FY2007.",
+    use:[{c:"Favorites menu over live TV", src:"img/sony/lead.webp", note:libSlides("sony")[0].note},
+      {...libSlides("sony")[2], c:"The ambient-TV pitch: a content wall", note:{title:"The ambient-TV pitch: a content wall", body:"The ambient-TV concept senior management approved: shows laid out as a 3D wall of thumbnails that animates into place."}},
+      4]})
+];
+
+const RIO_SLIDES = [
+  {c:"Shipped as Rio", note:{title:"Shipped as Rio", body:"Kyocera's Rio touchscreen phone. I was design program manager from paper prototypes through launch."},
+   scene:{auto:1, autoplay:PACE, layers:[
+    {id:"st", src:"img/rio/stencil.webp", cls:"flat drift", x:0, y:.037, w:1, z:0, o:1, sh:0},
+    {id:"shd", html:'<div class="rio-shadow"></div>', cls:"flat", x:.614, y:.8375, w:.283, z:1, o:0, sh:0},
+    {id:"menu", src:"img/rio/menu.webp", cls:"flat", x:.40, y:.1275, w:.339, z:2, o:0, s:.94, sh:0},
+    {id:"box", src:"img/rio/box.webp", cls:"cut", x:.134, y:.134, w:.732, z:3, o:1, sh:0}],
+    steps:[
+     {t:"Rio, on the shelf", d:"The retail box and the home screen it opens to.", set:{}},
+     {t:"Out of the box", hold:3300, d:"The phone and its menu: twelve tiles in the same style as the home screen.", set:{box:{x:-.073,mt:2,soft:1}, menu:{x:.602,o:1,s:1,mt:2,ot:1.4,soft:1}, shd:{o:1,d:1.1,ot:1.2,soft:1}}}]}},
+  {c:"What I was asked to do", note:{title:"What I was asked to do", body:"Kyocera wanted to offer a low-price touchscreen phone, and expected to get there by putting a touchscreen on a feature phone. I prototyped it to show what that would really take."},
+   scene:{auto:1, rowAt:3, layers:[
+    {id:"st", src:"img/rio/stencil-light.webp", cls:"flat drift", x:0, y:.037, w:1, z:0, o:1, sh:0},
+    {id:"ip", src:"img/rio/iphone.webp", cls:"flat", x:.0452, y:.337, w:.229, z:2, o:0, sh:0},
+    {id:"ipl", html:'<div class="tag2"><div class="ck">The bar</div><div class="cv">iPhone, 2007 · 3.5 in</div></div>', cls:"flat", x:.0752, y:.875, w:.229, z:3, o:0, sh:0},
+    {id:"neo", src:"img/rio/neo.webp", cls:"flat", x:.3073, y:.1565, w:.229, z:2, o:0, sh:0},
+    {id:"neol", html:'<div class="tag2"><div class="ck">The ask</div><div class="cv">Kyocera Neo · 2.2 in</div></div>', cls:"flat", x:.3073, y:.875, w:.229, z:3, o:0, sh:0},
+    {id:"wf", src:"img/rio/wires-ltp.webp", cls:"flat", x:.597, y:.2415, w:.3197, z:2, o:0, sh:0},
+    {id:"ph1", src:"img/rio/hand.webp", cls:"flat rnd", x:1.05, y:.2, w:.6, z:4, o:0, sh:.4},
+    {id:"tx1", html:'<div class="tag2 left"><div class="ck">Paper prototypes</div><div class="cv">Real screen size, tried by hand.</div><p class="expl">I drew the screens at the 2.2-inch size and mounted them on phone-sized blocks, so people could hold them and try contacts, lists and selection with a finger.</p></div>', cls:"flat", x:1.15, y:.36, w:.25, z:4, o:0, sh:0},
+    {id:"ph2", src:"img/rio/table.webp", cls:"flat rnd", x:1.05, y:.2, w:.6, z:4, o:0, sh:.4},
+    {id:"tx2", html:'<div class="tag2 left"><div class="ck">The proof</div><div class="cv">A Flash prototype of the keypad on a handheld PC.</div><p class="expl">Building the keypad showed the problems at 2.2 inches. When executive management saw it, they agreed touch on a feature-phone screen wasn&#39;t viable. The phone needed a bigger screen.</p></div>', cls:"flat", x:1.15, y:.36, w:.25, z:4, o:0, sh:0},
+    {id:"wfl", html:'<div class="tag2 left"><div class="ck">What I did</div><div class="cv">Wireframes for touch at 2.2 in, at the Neo&#39;s screen size.</div><p class="expl">Kyocera wanted a low-price touchscreen and planned to put touch on a feature phone. I designed for that screen to show what a real touch experience would take.</p></div>', cls:"flat", x:.567, y:.48, w:.3197, z:3, o:0, sh:0}],
+    steps:[
+     {t:"The bar: iPhone", hold:1000, d:"In 2007 the iPhone set what people expected from a touchscreen: a 3.5-inch screen built around the finger.", set:{ip:{o:1,x:.0752,mt:.8,ot:.55}, ipl:{o:1,d:.2,ot:.5}}},
+     {t:"The ask: touch on a feature phone", hold:1000, d:"Management's plan: add touch to a 2.2-inch feature-phone screen, like the Kyocera Neo's. Shown at the same scale as the iPhone.", set:{neo:{o:1,y:.1165,mt:.8,ot:.55}, neol:{o:1,d:.2,ot:.5}}},
+     {t:"Touch at 2.2 inches", hold:4000, d:"My wireframes, at the Neo's screen size: lists and controls a finger could actually hit. They showed how much the experience had to change.", set:{wf:{o:1,x:.567,mt:.8,ot:.55}, wfl:{o:1,d:.25,ot:.5}}},
+     {t:"Testing it on paper", hold:4200, d:"Paper prototypes at the real screen size, held and tried by hand.", set:{ip:{o:0,x:-.93,mt:1.7,ot:1.1,soft:1}, ipl:{o:0,x:-.93,mt:1.7,ot:1.1,soft:1}, neo:{o:0,x:-.69,mt:1.7,ot:1.1,soft:1,d:.08}, neol:{o:0,x:-.69,mt:1.7,ot:1.1,soft:1,d:.08}, wf:{o:0,x:-.43,mt:1.7,ot:1.1,soft:1,d:.16}, wfl:{o:0,x:-.43,mt:1.7,ot:1.1,soft:1,d:.16}, ph1:{o:1,x:.06,d:.45,mt:1.7,ot:1.1,soft:1}, tx1:{o:1,x:.69,d:.8,mt:1.7,ot:1.1,soft:1}}},
+     {t:"The proof", hold:6000, d:"I prototyped the keypad in Flash on a handheld PC. Working through it exposed the problems at 2.2 inches. When executive management saw it, they agreed: touch on a feature-phone screen wasn't viable, and the phone needed a bigger screen.", set:{ph1:{o:0,x:-.65}, tx1:{o:0,x:-.3}, ph2:{o:1,x:.06,d:.15}, tx2:{o:1,x:.69,d:.4}}}]}},
+  {c:"Two months to size the work", note:{title:"Two months to size the work", body:"Management gave me two months with a team of software engineers to prove the concept and gauge the scale of the work. I designed and wireframed the base applications."},
+   scene:{auto:1, rowAt:4, layers:[
+    {id:"st", src:"img/rio/stencil-light.webp", cls:"flat drift", x:0, y:.037, w:1, z:0, o:1, sh:0},
+    {id:"h", src:"img/rio/wf-home.webp", cls:"flat", x:.09, y:.2838, w:.2482, z:2, o:0, sh:0},
+    {id:"m", src:"img/rio/wf-msg.webp", cls:"flat", x:.3406, y:.2669, w:.3693, z:2, o:0, sh:0},
+    {id:"hs", src:"img/rio/wf-half.webp", cls:"flat", x:.3258, y:.6178, w:.3045, z:2, o:0, sh:0},
+    {id:"ta", html:'<div class="tag2 left"><div class="ck">Proof of concept</div><div class="cv">Two months with a team of software engineers.</div><p class="expl">Management gave me two months to build a proof of concept and gauge how much work a real touch experience would take. I designed and wireframed the base applications.</p></div>', cls:"flat", x:.74, y:.33, w:.23, z:3, o:0, sh:0},
+    {id:"tb", html:'<div class="tag2 left"><div class="ck">Green light</div><div class="cv">The proof of concept sized the work.</div><p class="expl">Kyocera approved the phone. A cross-functional team in the U.S., India and Japan wrote the formal specs, and I was the design stakeholder: answering their questions and reviewing the work against the design intent.</p></div>', cls:"flat", x:.71, y:.36, w:.23, z:3, o:0, sh:0}],
+    steps:[
+     {t:"The home screen, annotated", hold:2600, d:"Every element of the home screen called out: shortcuts, carrier banner, dialer, store and contacts.", set:{h:{o:1,x:.06,mt:.9,ot:.6}, ta:{o:1,x:.71,d:.25,mt:.9,ot:.6}}},
+     {t:"Messaging in three screens", hold:2200, d:"Choose Text, type in the editor, then send, edit or cancel from one list.", set:{m:{o:1,x:.3106,mt:.9,ot:.6}}},
+     {t:"Open questions, written down", hold:2200, d:"What still needed solving, like switching the keypad between full and half spacing.", set:{hs:{o:1,y:.5878,mt:.9,ot:.6}}},
+     {t:"Green light", hold:5500, d:"Kyocera approved the phone. A cross-functional team in the U.S., India and Japan wrote the formal specs; I was the design stakeholder, answering questions and reviewing against the design intent.", set:{ta:{o:0,y:.30,mt:1.7,ot:1.1,soft:1}, tb:{o:1,y:.33,d:.4,mt:1.7,ot:1.1,soft:1}}}]}},
+  {c:"A design language with Hello Design", note:{title:"A design language with Hello Design", body:"With the project approved, I brought in Hello Design in Culver City and managed the engagement end to end, from legal and contracts to delivery, as their sole stakeholder."},
+   scene:{auto:1, rowAt:1, layers:[
+    {id:"st", src:"img/rio/stencil-light.webp", cls:"flat drift", x:0, y:.037, w:1, z:0, o:1, sh:0},
+    {id:"lo", src:"img/rio/e-low.png", cls:"px", x:.1115, y:.506, w:.107, z:2, o:0, sh:.3},
+    {id:"mi", src:"img/rio/e-mid.png", cls:"px", x:.2485, y:.293, w:.2, z:2, o:0, sh:.3},
+    {id:"to", src:"img/rio/e-touch.png", cls:"px", x:.4785, y:.293, w:.2, z:2, o:0, sh:.3},
+    {id:"lol", html:'<div class="tag2"><div class="ck">Low</div><div class="cv">Feature phone</div></div>', cls:"flat", x:.0815, y:.75, w:.107, z:3, o:0, sh:0},
+    {id:"mil", html:'<div class="tag2"><div class="ck">Mid</div><div class="cv">Feature phone</div></div>', cls:"flat", x:.2185, y:.75, w:.2, z:3, o:0, sh:0},
+    {id:"tol", html:'<div class="tag2"><div class="ck">Touch</div><div class="cv">Rio</div></div>', cls:"flat", x:.4485, y:.75, w:.2, z:3, o:0, sh:0},
+    {id:"ta", html:'<div class="tag2 left"><div class="ck">Hello Design, Culver City</div><div class="cv">One visual language for every tier.</div><p class="expl">I took the agency through legal and contracts, then managed the work and its delivery as their only stakeholder. The language was built to carry from touch phones down to feature phones like the E2200.</p></div>', cls:"flat", x:.7185, y:.3, w:.23, z:3, o:0, sh:0},
+    {id:"hq", src:"img/rio/e-half.png", cls:"px", x:1.05, y:.357, w:.17, z:2, o:0, sh:.3},
+    {id:"t9", src:"img/rio/e-t9.png", cls:"px", x:1.25, y:.357, w:.17, z:2, o:0, sh:.3},
+    {id:"fq", src:"img/rio/e-full.png", cls:"px", x:1.45, y:.448, w:.2267, z:2, o:0, sh:.3},
+    {id:"hql", html:'<div class="tag2"><div class="ck">Half QWERTY</div><div class="cv">Default</div></div>', cls:"flat", x:1.05, y:.75, w:.17, z:3, o:0, sh:0},
+    {id:"t9l", html:'<div class="tag2"><div class="ck">T9</div><div class="cv">Familiar keypad</div></div>', cls:"flat", x:1.25, y:.75, w:.17, z:3, o:0, sh:0},
+    {id:"fql", html:'<div class="tag2"><div class="ck">Full QWERTY</div><div class="cv">Landscape</div></div>', cls:"flat", x:1.45, y:.75, w:.2267, z:3, o:0, sh:0},
+    {id:"tb", html:'<div class="tag2 left"><div class="ck">Text entry</div><div class="cv">Three keypads, half QWERTY by default.</div><p class="expl">People could pick the keypad that suited them. The default paired two letters per key, so every key could be wider.</p></div>', cls:"flat", x:1.1, y:.3, w:.23, z:3, o:0, sh:0},
+    {id:"kb", src:"img/rio/kb.webp", vid:"img/rio/kb.mp4", cls:"flat nat", x:1.1, y:.17, w:.2, z:2, o:0, sh:0},
+    {id:"kbl", html:'<div class="tag2"><div class="ck">Shipped</div><div class="cv">Rio</div></div>', cls:"flat", x:1.1, y:.74, w:.2, z:3, o:0, sh:0},
+    {id:"tc", html:'<div class="tag2 left"><div class="ck">Shipped</div><div class="cv">The default keypad in the finished phone.</div><p class="expl">Typing an email address on the shipped Rio.</p></div>', cls:"flat", x:1.1, y:.36, w:.23, z:3, o:0, sh:0}],
+    steps:[
+     {t:"One language, every tier", hold:4000, d:"The same visual language across low-end and mid-range feature phones and the touch phone.", set:{lo:{o:1,x:.0815,mt:.9,ot:.6}, mi:{o:1,x:.2185,d:.12,mt:.9,ot:.6}, to:{o:1,x:.4485,d:.24,mt:.9,ot:.6}, lol:{o:1,d:.4}, mil:{o:1,d:.5}, tol:{o:1,d:.6}, ta:{o:1,x:.6885,d:.5,mt:.9,ot:.6}}},
+     {t:"Three keypads", hold:4200, d:"Half QWERTY, T9 and full QWERTY, with half QWERTY as the default: two letters per key, so every key could be wider.", set:{lo:{o:0,x:-.9,mt:1.7,ot:1.1,soft:1}, mi:{o:0,x:-.77,mt:1.7,ot:1.1,soft:1,d:.06}, to:{o:0,x:-.55,mt:1.7,ot:1.1,soft:1,d:.12}, lol:{o:0,x:-.9,mt:1.7,ot:1.1,soft:1}, mil:{o:0,x:-.77,mt:1.7,ot:1.1,soft:1,d:.06}, tol:{o:0,x:-.55,mt:1.7,ot:1.1,soft:1,d:.12}, ta:{o:0,x:-.3,mt:1.7,ot:1.1,soft:1,d:.12}, hq:{o:1,x:.0517,mt:1.7,ot:1.1,soft:1,d:.4}, t9:{o:1,x:.2517,mt:1.7,ot:1.1,soft:1,d:.5}, fq:{o:1,x:.4517,mt:1.7,ot:1.1,soft:1,d:.6}, hql:{o:1,x:.0517,mt:1.7,ot:1.1,soft:1,d:.4}, t9l:{o:1,x:.2517,mt:1.7,ot:1.1,soft:1,d:.5}, fql:{o:1,x:.4517,mt:1.7,ot:1.1,soft:1,d:.6}, tb:{o:1,x:.7184,mt:1.7,ot:1.1,soft:1,d:.75}}},
+     {t:"Shipped in Rio", hold:5500, d:"The default keypad in the finished phone, typing an email address.", set:{t9:{o:0,x:-.4,mt:1.7,ot:1.1,soft:1}, fq:{o:0,x:-.3,mt:1.7,ot:1.1,soft:1}, t9l:{o:0,x:-.4,mt:1.7,ot:1.1,soft:1}, fql:{o:0,x:-.3,mt:1.7,ot:1.1,soft:1}, tb:{o:0,x:-.3,mt:1.7,ot:1.1,soft:1}, hq:{x:.135,y:.3,w:.2,mt:1.7,ot:1.1,soft:1,d:.2}, hql:{x:.135,w:.2,mt:1.7,ot:1.1,soft:1,d:.2}, kb:{o:1,x:.395,mt:1.7,ot:1.1,soft:1,d:.45}, kbl:{o:1,x:.395,mt:1.7,ot:1.1,soft:1,d:.45}, tc:{o:1,x:.635,mt:1.7,ot:1.1,soft:1,d:.7}}}]}},
+  {c:"The whole system, running", note:{title:"The whole system, running", body:"The shipped interface on the device. I managed the sound designer and art-directed the phone's sound; play the explorations beside it."},
+   scene:{auto:1, layers:[
+    {id:"v", src:"img/rio/demo.webp", vid:"img/rio/demo.mp4", cls:"nat", x:0, y:0, w:1, z:1, o:1, sh:0},
+    {id:"snd", html:'<div class="ck">Sound, art-directed</div><div class="cv">I managed and art-directed an outside sound designer. Ringtone and system-sound explorations:</div><div class="snd"><button type="button" data-snd="img/rio/snd-powerup.mp3" data-vt="0"><i aria-hidden="true"></i>Power up</button><button type="button" data-snd="img/rio/snd-ascent.mp3"><i aria-hidden="true"></i>Quiet Ascent</button><button type="button" data-snd="img/rio/snd-melancholic.mp3"><i aria-hidden="true"></i>Melancholic and uplifting</button></div>', x:.69, y:.34, w:.25, z:3, o:1, sh:0}],
+    steps:[
+     {t:"Home and the carrier store", hold:4500, d:"The home screen, then the store the carrier asked for.", set:{v:{vt:0}}},
+     {t:"Contacts, by letter", hold:4500, d:"Drag down the list and a large letter shows where you are.", set:{v:{vt:7}}},
+     {t:"Edit in place", hold:4500, d:"Open a contact and edit a field without leaving the card.", set:{v:{vt:12}}},
+     {t:"Favorites and a call", hold:4500, d:"Favorites as a list or as faces, then a call from a photo.", set:{v:{vt:31}}},
+     {t:"Settings and sound", hold:4500, d:"Sounds, volume and keypad tones, set from short lists.", set:{v:{vt:51}}}]}}
+];
+const P_EARLIER = [
+  pick("kyocera", {n:"Rio", tour:1, tag:"Kyocera · 2005–10", role:"Design program manager",
+    out:"Led the Rio touchscreen phone from a smaller-screen concept and paper prototypes to launch.",
+    why:"Touchscreens were replacing keypads.",
+    led:"Paper prototypes won a month of prototyping with a software team, then a green light. Ran specs, agency and prototyping budgets, and the sound design through launch.",
+    res:"Rio shipped. Earlier, the Eos concept was an I.D. Annual Design Review finalist and won an IDSA honorable mention in 2010.",
+    use:RIO_SLIDES}),
+  pick("truinject", {n:"Injection trainer", tour:1, tag:"Truinject · 2018", role:"Consulting designer, via DD Studios",
+    out:"Injection training navigated by the face itself. Shipped.",
+    why:"Clinicians learn to inject facial fillers on a sensor head and Bluetooth syringe. A badly placed injection can take a doctor to fix, so the training has to be clear.",
+    led:"Interviewed the advising doctors, mapped the journey, and designed the iPad app: navigation built on the face, live injection feedback and achievement badges.",
+    res:"Shipped. I delivered layouts and a style guide in Zeplin.",
+    use:[
+      {c:"Training for a delicate procedure", note:{title:"Training for a delicate procedure", body:"Truinject trains clinicians to inject facial fillers on a sensor head with a Bluetooth syringe, synced to a 3D face in an iPad app. I designed the app as a consultant to DD Studios, working for its director of user experience."},
+       scene:{auto:1, layers:[
+        {id:"bg", html:'<div class="jb-bg"></div>', cls:"flat", x:0, y:0, w:1, z:0, o:1, sh:0},
+        {id:"fa", src:"img/ti/final.webp", cls:"flat rnd", x:0.2200, y:0.1670, w:0.5600, z:2, o:1, sh:0},
+        {id:"fal", html:'<div class="tag2"><div class="ck">The iPad app</div><div class="cv">Final version, 2018</div></div>', cls:"flat thumbhide", x:0.2200, y:0.7930, w:0.5600, z:3, o:1, sh:0},
+        {id:"kt", src:"img/ti/kit.webp", cls:"flat rnd", x:0.5767, y:0.2200, w:0.3988, z:2, o:0, sh:0},
+        {id:"ktl", html:'<div class="tag2"><div class="ck">The trainer</div><div class="cv">Sensor head and Bluetooth syringe</div></div>', cls:"flat", x:0.5367, y:0.7100, w:0.3988, z:3, o:0, sh:0}],
+        steps:[
+         {t:"The finished app", hold:2600, d:"The Truinject iPad app, 2018.", set:{}},
+         {t:"A sensor head and a syringe", hold:4500, d:"Clinicians practice on a sensor head with a Bluetooth syringe. The iPad shows where and how to inject, in real time.", set:{fa:{x:0.0645,y:0.2200,w:0.4322,d:0.00,mt:1.6,ot:1,soft:1}, fal:{x:0.0645,y:0.7100,w:0.4322,d:0.00,mt:1.6,ot:1,soft:1}, kt:{o:1,x:0.5367,d:0.35,mt:.9,ot:.7,soft:1}, ktl:{o:1,d:0.55,mt:.9,ot:.7,soft:1}}}]}},
+      {c:"Starting with the doctors", note:{title:"Starting with the doctors", body:"I interviewed and observed the two doctors advising the project, then mapped the whole journey, from purchase to the first training."},
+       scene:{auto:1, rowAt:1, layers:[
+        {id:"bg", html:'<div class="jb-bg"></div>', cls:"flat", x:0, y:0, w:1, z:0, o:1, sh:0},
+        {id:"wl", src:"img/ti/wall.webp", cls:"flat rnd", x:0.1050, y:0.2684, w:0.5600, z:2, o:0, sh:0},
+        {id:"t1", html:'<div class="tag2 left"><div class="ck">Research</div><div class="cv">Two advising doctors, interviewed and observed.</div><p class="expl">The safety habits they named: gentle insertion, keep moving, and light injection pressure. A badly placed filler can take a doctor to fix.</p></div>', cls:"flat", x:0.7050, y:0.2884, w:0.2600, z:3, o:0, sh:0},
+        {id:"fl", src:"img/ti/flow.webp", cls:"flat rnd", x:0.9650, y:0.2684, w:0.5600, z:2, o:0, sh:0},
+        {id:"t2", html:'<div class="tag2 left"><div class="ck">The journey</div><div class="cv">Start, get, go.</div><p class="expl">From sign-up and purchase, through shipping and unboxing, to login, the dashboard and the first training. Mapped on the wall with personas.</p></div>', cls:"flat", x:1.5750, y:0.2884, w:0.2600, z:3, o:0, sh:0}],
+        steps:[
+         {t:"What the doctors said", hold:4500, d:"Two advising doctors, interviewed and observed. Their safety habits: gentle insertion, keep moving, light pressure.", set:{wl:{o:1,x:0.0650,d:0.00,mt:.9,ot:.7,soft:1}, t1:{o:1,x:0.6750,d:0.35,mt:.9,ot:.7,soft:1}}},
+         {t:"Start, get, go", hold:4500, d:"The journey from purchase to first training, mapped on the wall with personas.", set:{wl:{o:0,x:-0.8350,d:0.00,mt:1.6,ot:1,soft:1}, t1:{o:0,x:-0.2250,d:0.06,mt:1.6,ot:1,soft:1}, fl:{o:1,x:0.0650,d:0.30,mt:1.6,ot:1,soft:1}, t2:{o:1,x:0.6750,d:0.45,mt:1.6,ot:1,soft:1}}}]}},
+      {c:"Sketched, then prototyped", note:{title:"Sketched, then prototyped", body:"I sketched the navigation, then built mockups we prototyped in InVision and shared with the client for feedback."},
+       scene:{auto:1, rowAt:1, layers:[
+        {id:"bg", html:'<div class="jb-bg"></div>', cls:"flat", x:0, y:0, w:1, z:0, o:1, sh:0},
+        {id:"sketch", src:"img/ti/sketch.webp", cls:"flat rnd", x:0.0900, y:0.3000, w:0.2800, z:2, o:0, sh:0},
+        {id:"sketchl", html:'<div class="tag2"><div class="ck">Sketches</div><div class="cv">Hero navigation on sticky notes</div></div>', cls:"flat", x:0.0500, y:0.5416, w:0.2800, z:3, o:0, sh:0},
+        {id:"review", src:"img/ti/review.webp", cls:"flat rnd", x:0.4000, y:0.3000, w:0.2800, z:2, o:0, sh:0},
+        {id:"reviewl", html:'<div class="tag2"><div class="ck">Review</div><div class="cv">Screens up on the wall</div></div>', cls:"flat", x:0.3600, y:0.5416, w:0.2800, z:3, o:0, sh:0},
+        {id:"proto", src:"img/ti/proto.webp", cls:"flat rnd", x:0.7100, y:0.3000, w:0.2800, z:2, o:0, sh:0},
+        {id:"protol", html:'<div class="tag2"><div class="ck">Prototype</div><div class="cv">InVision, shared with the client</div></div>', cls:"flat", x:0.6700, y:0.5416, w:0.2800, z:3, o:0, sh:0},
+        {id:"ex", html:'<p class="expl" style="max-width:none">I sketched the navigation, then built mockups we prototyped in InVision to get the client&#39;s feedback.</p>', cls:"flat", x:0.2000, y:0.6616, w:0.6000, z:3, o:0, sh:0}],
+        steps:[
+         {t:"From sketch to prototype", hold:5000, d:"Sticky-note sketches, screens on the wall, then clickable InVision prototypes for the client.", set:{sketch:{o:1,x:0.0500,d:0.00,mt:.9,ot:.7,soft:1}, sketchl:{o:1,d:0.30,mt:.9,ot:.7,soft:1}, review:{o:1,x:0.3600,d:0.35,mt:.9,ot:.7,soft:1}, reviewl:{o:1,d:0.65,mt:.9,ot:.7,soft:1}, proto:{o:1,x:0.6700,d:0.70,mt:.9,ot:.7,soft:1}, protol:{o:1,d:1.00,mt:.9,ot:.7,soft:1}, ex:{o:1,d:1.30,mt:.9,ot:.7,soft:1}}}]}},
+      {c:"Navigation built on the face", note:{title:"Navigation built on the face", body:"The face itself is the menu. The first version put every indication around it; the final grouped them into regions to cut the clutter."},
+       scene:{auto:1, rowAt:2, layers:[
+        {id:"bg", html:'<div class="jb-bg"></div>', cls:"flat", x:0, y:0, w:1, z:0, o:1, sh:0},
+        {id:"i1", src:"img/ti/init1.webp", cls:"flat rnd", x:0.2350, y:0.1800, w:0.2900, z:2, o:0, sh:0},
+        {id:"i2", src:"img/ti/init2.webp", cls:"flat rnd", x:0.1950, y:0.1800, w:0.2900, z:3, o:0, sh:0},
+        {id:"ta", html:'<div class="tag2 left"><div class="ck">First version</div><div class="cv">Every indication around the face.</div><p class="expl">Fifteen treatment areas, from Worry Lines to Jelly Rolls. Pick one and the face highlights it, with the products to train on.</p></div>', cls:"flat", x:0.5750, y:0.2400, w:0.2600, z:3, o:0, sh:0},
+        {id:"h1", src:"img/ti/hero1.webp", cls:"flat rnd", x:0.9433, y:0.2000, w:0.2717, z:2, o:0, sh:0},
+        {id:"h2", src:"img/ti/hero2.webp", cls:"flat rnd", x:1.2650, y:0.2000, w:0.2717, z:2, o:0, sh:0},
+        {id:"tb", html:'<div class="tag2 left"><div class="ck">Final</div><div class="cv">Grouped into regions.</div><p class="expl">The fifteen indications grouped into eight regions to cut clutter and cognitive load. Pick a region, then an indication, then the product.</p></div>', cls:"flat", x:1.5967, y:0.2600, w:0.2600, z:3, o:0, sh:0},
+        {id:"h1l", html:'<div class="tag2"><div class="ck">Pick a region</div><div class="cv">Eight in all</div></div>', cls:"flat", x:0.9433, y:0.8050, w:0.2717, z:3, o:0, sh:0},
+        {id:"h2l", html:'<div class="tag2"><div class="ck">Then an indication</div><div class="cv">And its products</div></div>', cls:"flat", x:1.2650, y:0.8050, w:0.2717, z:3, o:0, sh:0}],
+        steps:[
+         {t:"Every indication on the face", hold:3500, d:"The first dashboard: fifteen indications around the face, with progress at the top.", set:{i1:{o:1,x:0.1950,d:0.00,mt:.9,ot:.7,soft:1}, ta:{o:1,x:0.5450,d:0.35,mt:.9,ot:.7,soft:1}}},
+         {t:"Pick one", hold:3000, d:"Choosing Glabellar highlights it on the face and opens its products.", set:{i2:{o:1,d:0,mt:.9,ot:.9,soft:1}}},
+         {t:"Grouped into regions", hold:5500, d:"The final design: fifteen indications in eight regions. Pick a region, then an indication, then the product.", set:{i1:{o:0,x:-0.7050,d:0.00,mt:1.6,ot:1,soft:1}, i2:{o:0,x:-0.7050,d:0.00,mt:1.6,ot:1,soft:1}, ta:{o:0,x:-0.3550,d:0.06,mt:1.6,ot:1,soft:1}, h1:{o:1,x:0.0433,d:0.30,mt:1.6,ot:1,soft:1}, h1l:{o:1,x:0.0433,d:0.30,mt:1.6,ot:1,soft:1}, h2:{o:1,x:0.3650,d:0.42,mt:1.6,ot:1,soft:1}, h2l:{o:1,x:0.3650,d:0.42,mt:1.6,ot:1,soft:1}, tb:{o:1,x:0.6967,d:0.60,mt:1.6,ot:1,soft:1}}}]}},
+      {c:"Feedback while you inject", note:{title:"Feedback while you inject", body:"The hardest screen: showing next steps while giving live feedback on pressure and volume. A cue in the pressure circle shows the right pressure as you inject."},
+       scene:{auto:1, rowAt:1, layers:[
+        {id:"bg", html:'<div class="jb-bg"></div>', cls:"flat", x:0, y:0, w:1, z:0, o:1, sh:0},
+        {id:"train1", src:"img/ti/train1.webp", cls:"flat rnd", x:0.1127, y:0.1700, w:0.2626, z:2, o:0, sh:0},
+        {id:"train1l", html:'<div class="tag2"><div class="ck">Practice</div><div class="cv">Pressure and volume, live</div></div>', cls:"flat", x:0.0527, y:0.7600, w:0.3026, z:3, o:0, sh:0},
+        {id:"train2", src:"img/ti/train2.webp", cls:"flat rnd", x:0.4252, y:0.1700, w:0.2562, z:2, o:0, sh:0},
+        {id:"train2l", html:'<div class="tag2"><div class="ck">Test</div><div class="cv">Pass each step</div></div>', cls:"flat", x:0.3652, y:0.7600, w:0.2962, z:3, o:0, sh:0},
+        {id:"summary", src:"img/ti/summary.webp", cls:"flat rnd", x:0.7315, y:0.1700, w:0.2358, z:2, o:0, sh:0},
+        {id:"summaryl", html:'<div class="tag2"><div class="ck">Summary</div><div class="cv">Badges and next steps</div></div>', cls:"flat", x:0.6715, y:0.7600, w:0.2758, z:3, o:0, sh:0},
+        {id:"fb", src:"img/ti/final.webp", cls:"flat rnd", x:0.9950, y:0.2139, w:0.5000, z:2, o:0, sh:0},
+        {id:"tc", html:'<div class="tag2 left"><div class="ck">Delivered</div><div class="cv">Layouts and a style guide, in Zeplin.</div><p class="expl">The app shipped with the Truinject trainer.</p></div>', cls:"flat", x:1.5450, y:0.3339, w:0.2600, z:3, o:0, sh:0}],
+        steps:[
+         {t:"Live feedback, then a score", hold:5500, d:"Practice shows pressure and volume as you inject, with a cue in the pressure circle. Tests check each step; the summary awards badges and suggests what to train next.", set:{train1:{o:1,x:0.0727,d:0.00,mt:.9,ot:.7,soft:1}, train1l:{o:1,d:0.30,mt:.9,ot:.7,soft:1}, train2:{o:1,x:0.3852,d:0.35,mt:.9,ot:.7,soft:1}, train2l:{o:1,d:0.65,mt:.9,ot:.7,soft:1}, summary:{o:1,x:0.6915,d:0.70,mt:.9,ot:.7,soft:1}, summaryl:{o:1,d:1.00,mt:.9,ot:.7,soft:1}}},
+         {t:"Shipped", hold:4500, d:"I delivered layouts and a style guide in Zeplin, and the app shipped with the Truinject trainer.", set:{train1:{o:0,x:-0.8273,d:0.00,mt:1.6,ot:1,soft:1}, train1l:{o:0,x:-0.8473,d:0.00,mt:1.6,ot:1,soft:1}, train2:{o:0,x:-0.5148,d:0.06,mt:1.6,ot:1,soft:1}, train2l:{o:0,x:-0.5348,d:0.06,mt:1.6,ot:1,soft:1}, summary:{o:0,x:-0.2085,d:0.12,mt:1.6,ot:1,soft:1}, summaryl:{o:0,x:-0.2285,d:0.12,mt:1.6,ot:1,soft:1}, fb:{o:1,x:0.0950,d:0.35,mt:1.6,ot:1,soft:1}, tc:{o:1,x:0.6450,d:0.55,mt:1.6,ot:1,soft:1}}}]}}]})
+];
+const byKey = Object.fromEntries([...SELECTED, ...EARLIER, ...P_SELECTED, ...P_EARLIER].map(c=>[key(c),c]));
 
 const pad = n => String(n).padStart(2,"0");
 // ---- Scenes ----
@@ -1073,7 +1445,17 @@ function build(){
   render(EARLIER, document.getElementById("earlier"), true);
   document.getElementById("n1").textContent = pad(SELECTED.length);
   document.getElementById("n2").textContent = pad(EARLIER.length);
+  render(P_SELECTED, document.getElementById("pFeatured"), false);
+  render(P_EARLIER, document.getElementById("pEarlier"), true);
+  document.getElementById("n3").textContent = pad(P_SELECTED.length);
+  document.getElementById("n4").textContent = pad(P_EARLIER.length);
 }
+(function(){
+  const box=document.getElementById("productWork"), btn=document.getElementById("moreBtn");
+  const set=open=>{ box.hidden=!open; btn.setAttribute("aria-expanded",open); btn.innerHTML=open?'Hide product work <span aria-hidden="true">↑</span>':'Show product work <span aria-hidden="true">↓</span>'; };
+  btn.addEventListener("click",()=>{ const open=box.hidden; set(open); if(open) box.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}); });
+  document.getElementById("backBtn").addEventListener("click",()=>{ set(false); document.getElementById("work").scrollIntoView(); });
+})();
 let current=null;
 build();
 
@@ -1188,7 +1570,7 @@ function fsMove(dir){
   if(dir<0&&i<=0) return;
   fsTrack.scrollBy({left:dir*fsTrack.clientWidth,behavior:reduce?"auto":"smooth"});
 }
-const storyRows=()=>[...document.querySelectorAll("#work .row[data-key]")];
+const storyRows=()=>[...document.querySelectorAll("#work .row[data-key]")].filter(r=>r.offsetParent!==null);
 const nextRowOf=row=>{ const r=storyRows(); return r[r.indexOf(row)+1]||null; };
 function fsNavUI(){
   if(!fsRow) return;
