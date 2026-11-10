@@ -305,10 +305,9 @@ footer a{color:inherit;text-transform:none;letter-spacing:0;font-size:14px}
 .scene .ly.htm .attr b{font:600 max(15px,2.6cqw)/1.1 var(--sans);color:var(--c)}
 .scene .ly.htm .attr span{font:400 max(11px,1.4cqw)/1.45 var(--sans);color:var(--g4)}
 .mnote{display:none}
-@media (max-width:820px){
-  .mnote{display:block;margin:0;padding:0 0 12px;color:var(--g4);font-size:14px}
+@media (max-width:820px), (pointer:coarse) and (max-height:520px){
   .row .cue,.row .fsbtn,.row .endnote,.controls .ql{display:none}
-  .row .media>button{cursor:default}
+  .row .mcue{display:inline-flex}
 }
 .scene .ly.htm .xs{background:#fff;border-radius:.6cqw;overflow:hidden;box-shadow:0 .15cqw .4cqw rgba(17,17,16,.10),0 1.2cqw 2.4cqw -1cqw rgba(17,17,16,.28);font:500 max(8px,.85cqw)/1.2 var(--sans)}
 .scene .ly.htm .xr{display:grid;grid-template-columns:1fr 1.5fr 1.5fr 1fr;border-bottom:1px solid var(--g2)}
@@ -412,6 +411,66 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;paddin
   .jm{text-align:left}
   .r-skills,.r-pat{grid-template-columns:1fr}
 }
+
+/* Phone story view: a story opens as a vertical scroll of slides, each with its caption underneath. */
+.mcue{display:none;align-items:center;gap:8px;margin-top:14px;color:var(--accent);font-weight:600}
+.mv{position:fixed;inset:0;z-index:70;background:var(--paper);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;opacity:0;transition:opacity .3s var(--ease)}
+.mv.show{opacity:1}
+.mv-bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:calc(10px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));
+  background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--g2)}
+.mv-bar .lbl{color:var(--g4);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;opacity:0;transition:opacity .25s}
+.mv-bar.named .lbl{opacity:1}
+.mv-x{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 16px;border:1px solid var(--g2);border-radius:999px;color:var(--ink);font-weight:600;background:#fff}
+.mv-in{max-width:680px;margin:0 auto;padding:24px max(16px,env(safe-area-inset-right,0px)) calc(48px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.mv-hd .tag{color:var(--g4)}
+.mv-hd h2{margin:8px 0 10px;font-size:32px;line-height:1.08;font-weight:600;letter-spacing:-.015em}
+.mv-out{margin:0 0 14px;font-size:19px;line-height:1.4;text-wrap:pretty}
+.mv-hd .role{color:var(--g4)}
+.mv-dl{margin:22px 0 0;display:grid;gap:16px;padding-top:18px;border-top:1px solid var(--g2)}
+.mv-dl dt{color:var(--accent);margin-bottom:4px}
+.mv-dl dd{margin:0;font-size:16px;line-height:1.5;text-wrap:pretty}
+.mv-s{margin-top:56px}
+.mv-n{display:flex;align-items:center;gap:12px;color:var(--g4);margin-bottom:12px}
+.mv-n::after{content:"";flex:1;height:1px;background:var(--g2)}
+.mv-fr{position:relative;width:100%;max-width:calc((100svh - 150px) * 1.6);margin:0 auto;aspect-ratio:16/10;border-radius:2px;overflow:hidden;
+  background-color:var(--g1);background-image:repeating-linear-gradient(135deg,transparent 0 11px,var(--g2) 11px 12px)}
+.mv-fr.has-img{background:#fff}
+.mv-fr>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.mv-fr .k{position:absolute;top:12px;left:14px;right:14px;color:var(--g4)}
+.mv-fr.scene-frame{background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+/* Scenes are laid out on a fixed 760px stage and scaled to fit, so their text keeps its proportions on a small screen. */
+.mv-fr.scene-frame .scene{inset:auto;left:0;top:0;width:760px;height:475px;transform-origin:0 0;transform:scale(var(--k,.45))}
+.mv-s{scroll-margin-top:72px}
+.mv-cap{margin-top:16px}
+.mv-cap h3{margin:0 0 6px;font-size:21px;line-height:1.2;font-weight:600;letter-spacing:-.005em;text-wrap:balance}
+.mv-cap>p{margin:0;font-size:16px;line-height:1.5;color:var(--ink);text-wrap:pretty}
+.mv-pins{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+.mv-pins li{padding-left:14px;border-left:2px solid var(--accent);font-size:15px;line-height:1.45;color:var(--g4)}
+.mv-pins b{display:block;color:var(--ink);font-weight:600}
+.mv-snd{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.mv-snd button{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 18px;border:1px solid var(--g2);border-radius:999px;background:#fff;font-weight:500;font-size:15px}
+.mv-snd i{width:0;height:0;border-style:solid;border-width:6px 0 6px 10px;border-color:transparent transparent transparent var(--accent)}
+.mv-snd button.on i{width:10px;height:12px;border:0;border-left:3px solid var(--accent);border-right:3px solid var(--accent)}
+.mv-steps{margin-top:16px;padding:14px;border-radius:4px;background:var(--g1)}
+.mv-sbar{display:flex;align-items:center;gap:10px}
+.mv-sbar button{flex:0 0 auto;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#fff;border:1px solid var(--g2);font-size:18px;line-height:1;text-align:center}
+.mv-sbar button:disabled{opacity:.35;cursor:default}
+.mv-sbar .mv-play{display:none}
+.mv-sct{flex:1;min-width:0;display:flex;align-items:center;gap:10px;color:var(--g4)}
+.mv-dots{display:flex;gap:4px;flex:1}
+.mv-dots i{flex:1;max-width:28px;height:3px;border-radius:2px;background:var(--g2);transition:background .3s}
+.mv-dots i.on{background:var(--accent)}
+.mv-sd{display:grid;margin-top:12px}
+.mv-sd>div{grid-area:1/1;visibility:hidden}
+.mv-sd>div.on{visibility:visible}
+.mv-sd b{display:block;font-size:16px;line-height:1.3;font-weight:600}
+.mv-sd p{margin:4px 0 0;font-size:15px;line-height:1.5;color:var(--g4);text-wrap:pretty}
+.mv-ft{margin-top:64px;padding-top:24px;border-top:2px solid var(--ink);display:grid;gap:14px;justify-items:start}
+.mv-next{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 22px;border-radius:999px;background:var(--accent);color:var(--ink);font-weight:600;font-size:16px}
+.mv-back{min-height:40px;color:var(--g4)}
+.mv .wipe-h{display:none}
+@media (prefers-reduced-motion:reduce){.mv{transition:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 
@@ -427,7 +486,6 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;paddin
 
   <main id="work">
     <div class="group-label lbl"><span>Selected work</span><span id="n1"></span></div>
-    <p class="mnote">The full case studies play on a tablet or desktop.</p>
     <div id="featured"></div>
     <div class="creds lbl" aria-label="Credentials"><span>Sony Presidential Award (TVOA, FY2007)</span><span>9 U.S. patents and applications</span><span>Eos design awards</span><span>200+ designers mentored</span><span>DARPA field app</span></div>
     <div class="group-label lbl" style="margin-top:72px"><span>Earlier work</span><span id="n2"></span></div>
@@ -488,6 +546,11 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;paddin
     <span>John Salisbury Design</span>
     <a href="mailto:johnsalisbury5@gmail.com">johnsalisbury5@gmail.com</a>
   </footer>
+</div>
+
+<div class="mv" id="mv" hidden role="dialog" aria-modal="true" aria-labelledby="mvTitle">
+  <div class="mv-bar" id="mvBar"><span class="lbl" id="mvBarName"></span><button class="mv-x lbl" id="mvClose" type="button">Close <span aria-hidden="true">✕</span></button></div>
+  <div class="mv-in" id="mvIn"></div>
 </div>
 
 <div class="fs" id="fs" hidden role="dialog" aria-modal="true" aria-label="Full screen images">
@@ -1317,6 +1380,7 @@ function render(list, el, compact){
       ${c.ctx?`<p class="ctx">${T(c.ctx)}</p>`:""}
       ${c.cred?`<div class="co-creds lbl">${c.cred.map(x=>`<span>${T(x)}</span>`).join("")}</div>`:""}
       <button class="cue lbl open-btn" aria-expanded="false">Quick look <span aria-hidden="true">→</span></button>
+      <button class="mcue lbl" type="button">View the story <span aria-hidden="true">→</span></button>
       <div class="detail"><div>
         <div class="role lbl">${T(c.role)}</div>
         <dl>
@@ -1373,10 +1437,10 @@ function open(row){
   },160);
 }
 // Event delegation, so rows keep working after a focus view re-renders them.
-const PHONE=matchMedia("(max-width:820px)");
+const PHONE=matchMedia("(max-width:820px), (pointer:coarse) and (max-height:520px)");
 document.getElementById("work").addEventListener("click",e=>{
   const row=e.target.closest(".row"); if(!row) return;
-  if(PHONE.matches){ e.preventDefault(); return; }
+  if(PHONE.matches){ e.preventDefault(); mvOpen(row.dataset.key); return; }
   const t=row.querySelector(".track");
   if(e.target.closest(".open-btn")) open(row);
   else if(e.target.closest(".fsbtn")) fsOpen(row);
@@ -1640,6 +1704,137 @@ document.addEventListener("keydown",e=>{
 </script>
 
 <script>
+// ---- Phone story view ----
+// On phones (portrait or landscape) a story opens as one vertical scroll: header copy, then each slide with its caption under it.
+// Animated scenes play their steps while on screen; tap the picture or the arrows to step yourself. No markers, no full screen.
+const mv=document.getElementById("mv"), mvIn=document.getElementById("mvIn");
+let mvKey=null, mvPushed=false, mvRet=null;
+const mvLazy=h=>h.replace(/<img /g,'<img loading="lazy" ');
+function mvSlideHTML(s,j,n){
+  const no=(s&&s.note)||{}, title=no.title||cap(s);
+  let fr, extra="";
+  if(s&&s.scene){
+    const st=s.scene.steps;
+    fr=`<div class="mv-fr scene-frame" role="button" tabindex="0" aria-label="Next step">${sceneHTML(s.scene,0)}</div>`;
+    const snd=s.scene.layers.map(l=>l.html||"").join("").match(/<button[^>]*data-(?:snd|unmute)[^>]*>[\s\S]*?<\/button>/g);
+    extra=(snd?`<div class="mv-snd">${snd.join("")}</div>`:"")+`<div class="mv-steps"><div class="mv-sbar"><button class="mv-pv" type="button" aria-label="Previous step">‹</button><div class="mv-sct"><span class="lbl mv-sn">01 / ${pad(st.length)}</span><span class="mv-dots">${st.map(()=>"<i></i>").join("")}</span></div><button class="mv-nx" type="button" aria-label="Next step">›</button></div>
+      <div class="mv-sd" aria-live="polite">${st.map((p,k)=>`<div data-s="${k+1}"><b>${p.t}</b>${p.d?`<p>${T(p.d)}</p>`:""}</div>`).join("")}</div></div>`;
+  } else {
+    fr=srcOf(s)?`<div class="mv-fr has-img"><img src="${srcOf(s)}" alt="${title}"></div>`:`<div class="mv-fr"><span class="k lbl">Image ${pad(j+1)} · ${cap(s)}</span></div>`;
+    if(no.pins&&no.pins.length) extra=`<ul class="mv-pins">${no.pins.map(p=>`<li><b>${p.t}</b>${p.d?T(p.d):""}</li>`).join("")}</ul>`;
+  }
+  return `<section class="mv-s" data-j="${j}"><div class="mv-n lbl">${pad(j+1)} / ${pad(n)}</div>${fr}<div class="mv-cap"><h3>${title}</h3>${no.body?`<p>${T(no.body)}</p>`:""}${extra}</div></section>`;
+}
+function mvRender(c){
+  const rows=storyRows(), i=rows.findIndex(r=>r.dataset.key===key(c)), nr=rows[i+1], nc=nr&&byKey[nr.dataset.key];
+  mvIn.innerHTML=mvLazy(`<header class="mv-hd"><span class="tag lbl">${c.tag}</span><h2 id="mvTitle">${c.n}</h2><p class="mv-out">${T(c.out)}</p><div class="role lbl">${T(c.role)}</div>
+    <dl class="mv-dl"><div><dt class="lbl">Why it mattered</dt><dd>${T(c.why)}</dd></div><div><dt class="lbl">What I led</dt><dd>${T(c.led)}</dd></div><div><dt class="lbl">What happened</dt><dd>${T(c.res)}</dd></div></dl></header>
+    ${c.slides.map((s,j)=>mvSlideHTML(s,j,c.slides.length)).join("")}
+    <footer class="mv-ft">${nc?`<button class="mv-next" type="button" data-next="${nr.dataset.key}">Next story: ${nc.n} <span aria-hidden="true">→</span></button>`:""}<button class="mv-back lbl" type="button">Back to all work</button></footer>`);
+  document.getElementById("mvBarName").textContent=c.n;
+  mvSc=c.slides.map((s,j)=>s&&s.scene?{j,s,k:0,run:0,t:0,user:false}:null);
+  mvIn.querySelectorAll(".mv-fr.scene-frame").forEach(f=>mvRO.observe(f));
+  mvIn.querySelectorAll(".mv-s").forEach(sec=>{ const st=mvSc[+sec.dataset.j]; if(st){ mvUI(st); if(reduce) mvGo(st,1); } mvIO.observe(sec.querySelector(".mv-fr")); });
+}
+const mvRO=new ResizeObserver(es=>es.forEach(e=>e.target.style.setProperty("--k",(e.contentRect.width/760).toFixed(4))));
+// Scene stepping. Only the scene most on screen plays.
+let mvSc=[], mvAct=null;
+const mvSec=st=>mvIn.querySelector(`.mv-s[data-j="${st.j}"]`);
+function mvUI(st){
+  const sec=mvSec(st); if(!sec) return; const n=st.s.scene.steps.length, k=Math.max(1,st.k);
+  sec.querySelector(".mv-sn").textContent=`${pad(k)} / ${pad(n)}`;
+  sec.querySelectorAll(".mv-dots i").forEach((d,i)=>d.classList.toggle("on",i<k));
+  sec.querySelectorAll(".mv-sd>div").forEach(d=>d.classList.toggle("on",+d.dataset.s===k));
+  sec.querySelector(".mv-pv").disabled=st.k<=1;
+  const nx=sec.querySelector(".mv-nx"), end=st.k>=n; nx.textContent=end?"↻":"›"; nx.setAttribute("aria-label",end?"Play again":"Next step");
+}
+function mvWait(st,ms){ clearTimeout(st.t); const run=st.run; st.t=setTimeout(()=>{ if(run===st.run&&mvAct===st&&!st.user&&!reduce) mvGo(st,st.k+1); },ms); }
+function mvGo(st,k){
+  const sc=st.s.scene, n=sc.steps.length; clearTimeout(st.t); st.run++;
+  if(k>n) return; st.k=Math.max(0,Math.min(n,k));
+  const root=mvSec(st)&&mvSec(st).querySelector(".scene"); if(!root) return;
+  seqStop(true); applyScene(root,sc,st.k); mvUI(st);
+  const ss=sceneState(sc,st.k), run=st.run; let seq=false;
+  sc.layers.forEach(l=>{ if(!l.seq) return; const el=root.querySelector(`.ly[data-id="${l.id}"]`); if(!el) return;
+    if(!ss[l.id].play){ const c=el.querySelector(".cur"); if(c) c.classList.remove("show","press"); return; }
+    seq=true; const seg=ss[l.id].seg;
+    if(reduce||st.user||mvAct!==st){ seqShow(el,l.seq.ends?l.seq.ends[seg]:l.seq.frames.length-1); el.classList.add("done"); return; }
+    setTimeout(()=>{ if(run!==st.run) return; seqPlay(el,l.seq,seg).then(ok=>{ if(ok&&run===st.run&&st.k<n) mvWait(st,l.seq.segs?500:1500); }); },l.seq.segs&&seg?60:700);
+  });
+  if(st.k<n&&!seq) mvWait(st,(sc.steps[st.k-1]||{}).hold??(sc.autoplay||readMs(sc.steps[st.k-1])));
+}
+function mvActivate(st){
+  if(mvAct===st) return;
+  if(mvAct){ clearTimeout(mvAct.t); mvAct.run++; seqStop(); const old=mvSec(mvAct); if(old) old.classList.remove("act"); }
+  mvAct=st; if(!st) return;
+  mvSec(st).classList.add("act");
+  if(reduce||st.user) return;
+  if(st.k===0){ const run=st.run; st.t=setTimeout(()=>{ if(run===st.run&&mvAct===st) mvGo(st,1); },500); }
+  else if(st.k<st.s.scene.steps.length) mvGo(st,st.k);
+}
+const mvVis=new Map();
+const mvIO=new IntersectionObserver(es=>{
+  es.forEach(e=>mvVis.set(e.target,e.intersectionRatio));
+  let best=null, br=.55;
+  mvVis.forEach((r,el)=>{ if(r>br&&el.isConnected){ br=r; best=el; } });
+  const sec=best&&best.closest(".mv-s"), st=sec?mvSc[+sec.dataset.j]:null;
+  mvIn.querySelectorAll(".mv-s.act").forEach(x=>{ if(x!==sec) x.classList.remove("act"); });
+  if(sec) sec.classList.add("act");
+  if(st||!best) mvActivate(st);
+},{root:mv,threshold:[0,.25,.55,.7,.85,1]});
+// Fallback for scenes wider than the cycle helper used in full screen.
+setInterval(()=>{ if(reduce||mv.hidden) return; mv.querySelectorAll(".mv-s.act .ly.cyc").forEach(f=>{ const im=[...f.querySelectorAll("img")], i=im.findIndex(x=>x.classList.contains("on")); if(i<im.length-1) im.forEach((x,k)=>x.classList.toggle("on",k===i+1)); }); },2600);
+
+function mvOpen(k,replace){
+  const c=byKey[k]; if(!c) return;
+  if(mvAct) mvActivate(null);
+  mvVis.clear(); mvIO.disconnect(); mvRO.disconnect();
+  if(!mvKey) mvRet=document.activeElement;
+  mvKey=k; mvRender(c);
+  const h="#story-"+k;
+  if(replace||mvPushed) history.replaceState({mv:k},"",h); else { history.pushState({mv:k},"",h); mvPushed=true; }
+  mv.hidden=false; mv.scrollTop=0; document.documentElement.style.overflow="hidden";
+  requestAnimationFrame(()=>mv.classList.add("show"));
+  document.getElementById("mvClose").focus({preventScroll:true});
+}
+function mvShut(){
+  if(!mvKey) return;
+  const k=mvKey; mvKey=null; mvActivate(null); mvVis.clear(); mvIO.disconnect(); seqStop();
+  mv.classList.remove("show"); document.documentElement.style.overflow="";
+  setTimeout(()=>{ if(!mvKey){ mv.hidden=true; mvIn.innerHTML=""; } },reduce?0:300);
+  const row=document.querySelector(`#work .row[data-key="${k}"]`);
+  if(row){ const b=row.querySelector(".mcue")||row.querySelector(".open-btn"); if(b) b.focus({preventScroll:true}); row.scrollIntoView({block:"center"}); }
+}
+function mvClose(){ if(mvPushed){ mvPushed=false; history.back(); } else { history.replaceState(null,"",location.pathname+location.search); mvShut(); } }
+addEventListener("popstate",e=>{ const k=e.state&&e.state.mv; if(k&&byKey[k]&&PHONE.matches){ mvPushed=true; mvOpen(k,true); } else { mvPushed=false; mvShut(); } });
+document.getElementById("mvClose").addEventListener("click",mvClose);
+mv.addEventListener("scroll",()=>{ document.getElementById("mvBar").classList.toggle("named",mv.scrollTop>140); },{passive:true});
+mv.addEventListener("click",e=>{
+  if(e.target.closest("[data-snd],[data-unmute]")) return;
+  const nx=e.target.closest("[data-next]"); if(nx){ mvOpen(nx.dataset.next); return; }
+  if(e.target.closest(".mv-back")){ mvClose(); return; }
+  const sec=e.target.closest(".mv-s"), st=sec&&mvSc[+sec.dataset.j]; if(!st) return;
+  const n=st.s.scene.steps.length;
+  if(e.target.closest(".mv-pv")){ st.user=true; mvGo(st,st.k-1<1?1:st.k-1); return; }
+  if(e.target.closest(".mv-nx")||e.target.closest(".mv-fr")){
+    if(st.k>=n){ st.user=false; mvActivate(null); applyScene(sec.querySelector(".scene"),st.s.scene,0); st.k=0; mvUI(st); mvActivate(st); if(reduce) mvGo(st,1); return; }
+    st.user=true; mvGo(st,st.k+1);
+  }
+});
+mv.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){ e.preventDefault(); mvClose(); }
+  if((e.key==="Enter"||e.key===" ")&&e.target.matches(".mv-fr[role=button]")){ e.preventDefault(); e.target.click(); }
+});
+// Rows: the whole row opens the story on a phone.
+document.getElementById("work").addEventListener("keydown",e=>{ if(PHONE.matches&&(e.key==="Enter"||e.key===" ")&&e.target.closest(".mcue")){ e.preventDefault(); e.target.click(); } });
+// A shared link to a story opens it straight away on a phone.
+(()=>{ const m=location.hash.match(/^#story-([a-z0-9]+)$/); if(!m||!byKey[m[1]]) return;
+  if(PHONE.matches){ history.replaceState(null,"",location.pathname+location.search); mvOpen(m[1]); }
+  else { const r=document.querySelector(`#work .row[data-key="${m[1]}"]`); if(r){ r.scrollIntoView(); open(r); } } })();
+// Turning a phone into a tablet-size window (or back) closes the phone view cleanly.
+PHONE.addEventListener("change",()=>{ if(!PHONE.matches&&mvKey) mvClose(); });
+</script>
+<script>
 // Sound buttons inside scenes: one sound at a time; "Power up" also restarts the demo video.
 (()=>{ let cur=null, btn=null;
   const stop=()=>{ if(cur){ cur.pause(); cur=null; } if(btn){ btn.classList.remove("on"); btn=null; } };
@@ -1649,12 +1844,14 @@ document.addEventListener("keydown",e=>{
     if(btn===b){ stop(); return; }
     stop(); cur=new Audio(b.dataset.snd); btn=b; b.classList.add("on");
     cur.addEventListener("ended",stop); cur.play().catch(stop);
-    if(b.dataset.vt!=null){ const v=b.closest(".scene")&&b.closest(".scene").querySelector(".ly.vid video"); if(v){ try{ v.currentTime=+b.dataset.vt; }catch(_){} } }
+    const scn=b.closest(".scene")||(b.closest(".mv-s")&&b.closest(".mv-s").querySelector(".scene"));
+    if(b.dataset.vt!=null){ const v=scn&&scn.querySelector(".ly.vid video"); if(v){ try{ v.currentTime=+b.dataset.vt; }catch(_){} } }
   },true);
   document.addEventListener("click",e=>{
     const b=e.target.closest("[data-unmute]"); if(!b) return;
     e.stopPropagation(); e.preventDefault(); stop();
-    const v=b.closest(".scene")&&b.closest(".scene").querySelector(".ly.vid video"); if(!v) return;
+    const scn=b.closest(".scene")||(b.closest(".mv-s")&&b.closest(".mv-s").querySelector(".scene"));
+    const v=scn&&scn.querySelector(".ly.vid video"); if(!v) return;
     try{ if(typeof tourStop==="function") tourStop(); }catch(_){}
     if(!v.muted){ v.muted=true; b.classList.remove("on"); return; }
     let last=0; const off=()=>{ v.muted=true; b.classList.remove("on"); v.removeEventListener("timeupdate",tick); };
@@ -1667,7 +1864,8 @@ document.addEventListener("keydown",e=>{
 <script>
 // Sony video slides: play only the slide that is open and on screen; posters everywhere else.
 (()=>{ if(reduce) return;
-  const on=(v)=>{ const fsOpen=document.querySelector(".fs.show"); const inFs=!!v.closest(".fs");
+  const on=(v)=>{ if(v.closest(".mv")){ const sec=v.closest(".mv-s"); if(!sec||!sec.classList.contains("act")) return false; const b=sec.querySelector(".mv-fr").getBoundingClientRect(); return b.bottom>0&&b.top<innerHeight; }
+    const fsOpen=document.querySelector(".fs.show"); const inFs=!!v.closest(".fs");
     if(fsOpen?!inFs:(inFs||!v.closest(".row.open"))) return false;
     const box=v.closest(".track,.fs-track"), sl=v.closest(".slide,.fs-slide"); if(!box||!sl) return false;
     const a=box.getBoundingClientRect(), b=sl.getBoundingClientRect(); const ov=Math.min(a.right,b.right)-Math.max(a.left,b.left);
